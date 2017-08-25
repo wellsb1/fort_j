@@ -1,0 +1,224 @@
+/*
+ * Copyright 2008-2017 Wells Burke
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.forty11.j.api;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Searches each class found in the classpath for public
+ * static methods annotated with <code>ApiMethod</code> and
+ * generates the code for a static delegating method call
+ * that can be placed in any class.
+ *
+ * This is a utility that was created to make it easier to
+ * add static delegating methods to <code>J</code>.
+ *
+ * @see io.forty11.j.J
+ * @author Wells Burke
+ */
+public class Gen
+{
+   //@Comment("Generates the code for Jj by searching the classpath for @ApiMethods.")
+   public static void main(String[] args)
+   {
+      Set<Method> jjMethods = new HashSet();
+
+      Class clazz = null;
+      for (String className : Classes.listClasses())
+      {
+         clazz = Classes.loadClass(className, true);
+         try
+         {
+            Method[] methods = clazz.getMethods();
+            for (Method method : methods)
+            {
+               if (method.getAnnotation(ApiMethod.class) != null)
+               {
+                  jjMethods.add(method);
+               }
+            }
+         }
+         catch (Error ex)
+         {
+            Log.log("Error loading class: " + clazz.getName());
+            ex.printStackTrace();
+         }
+      }
+      generate(jjMethods);
+   }
+
+   static void generate(Set<Method> jjMethods)
+   {
+      Map<Method, String> calls = new HashMap();
+
+      for (Method method : jjMethods)
+      {
+         calls.put(method, getCall(method));
+      }
+
+      List<Method> sorted = new ArrayList(jjMethods);
+      Collections.sort(sorted, new Comparator()
+         {
+            @Override
+            public int compare(Object o1, Object o2)
+            {
+               String str1 = ((Method) o1).getName();
+               String str2 = ((Method) o2).getName();
+
+               return str1.compareTo(str2);
+            }
+
+         });
+
+      StringBuffer buff = new StringBuffer();
+      for (Method m : sorted)
+      {
+         buff.append(calls.get(m)).append("\r\n");
+      }
+      System.out.println(buff.toString());
+
+   }
+
+   static String getCall(Method method)
+   {
+      StringBuffer buff = new StringBuffer("");
+
+      String name = method.getName();
+      String returnType = getTypeString(method.getReturnType(), false);
+
+      boolean isVoid = returnType.equals("void");
+
+      Class[] args = method.getParameterTypes();
+
+      buff.append("public static " + returnType + " " + name + "(");
+      for (int i = 0; args != null && i < args.length; i++)
+      {
+         String arg = getTypeString(args[i], method.isVarArgs() && i == args.length - 1);
+
+         buff.append(arg).append(" arg" + i);
+         if (i < args.length - 1)
+
+         {
+            buff.append(", ");
+         }
+      }
+      buff.append("){ ");
+
+      buff.append("try{");
+
+      if (!isVoid)
+      {
+         buff.append("return ");
+      }
+      buff.append(method.getDeclaringClass().getName()).append(".");
+
+      buff.append(name).append("(");
+      for (int i = 0; args != null && i < args.length; i++)
+      {
+         buff.append("arg" + i);
+         if (i < args.length - 1)
+         {
+            buff.append(", ");
+         }
+      }
+      buff.append(");");
+
+      buff.append("}catch(Exception ex){ throw ex instanceof RuntimeException ? (RuntimeException)ex : new RuntimeException(ex); }}");
+
+      String call = buff.toString();
+
+      return call;
+   }
+
+   public static String getTypeString(Class type, boolean varArgs)
+   {
+      String string = type.getName();
+
+      string = string.replace('$', '.');
+
+      int dims = 0;
+      while (string.startsWith("["))
+      {
+         dims++;
+         string = string.substring(1, string.length());
+      }
+
+      while (string.charAt(string.length() - 1) == ';')
+      {
+         string = string.substring(0, string.length() - 1);
+      }
+
+      if (string.length() == 1)
+      {
+         char c = string.charAt(0);
+         switch (c)
+         {
+            case 'B':
+               string = "byte";
+               break;
+            case 'C':
+               string = "char";
+               break;
+            case 'D':
+               string = "double";
+               break;
+            case 'F':
+               string = "float";
+               break;
+            case 'I':
+               string = "int";
+               break;
+            case 'J':
+               string = "long";
+               break;
+            case 'S':
+               string = "short";
+               break;
+            case 'Z':
+               string = "boolean";
+               break;
+         }
+      }
+      else
+      {
+         while (Character.isUpperCase(string.charAt(0)))
+         {
+            string = string.substring(1, string.length());
+         }
+      }
+
+      if (dims > 0 && varArgs)
+      {
+         string += "...";
+      }
+      else
+      {
+         for (int i = 0; i < dims; i++)
+         {
+            string += "[]";
+         }
+      }
+      return string.trim();
+   }
+}
