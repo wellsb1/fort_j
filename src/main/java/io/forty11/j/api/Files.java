@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -236,12 +236,6 @@ public class Files
       return !abspath.equals(cnnpath);
    }
 
-   //   @ApiMethod
-   //   public static String read(String file) throws Exception
-   //   {
-   //      return read(new File(file));
-   //   }
-
    @ApiMethod
    public static String read(File file) throws Exception
    {
@@ -266,7 +260,7 @@ public class Files
    @ApiMethod
    public static void write(String file, String text) throws Exception
    {
-      if(text == null)
+      if (text == null)
          return;
       write(new File(file), text);
    }

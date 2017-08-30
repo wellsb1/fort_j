@@ -1,4 +1,4 @@
-package io.forty11.j.api;
+package io.forty11.j.utils;
 
 import java.text.ParseException;
 import java.text.ParsePosition;

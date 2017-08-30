@@ -57,6 +57,7 @@ public class Paths
    //   }
 
    @ApiMethod
+   @Comment(value = "Attempts to normalize a file path reference removing redundant wild cards and normalizing to \"/\" as the separator")
    public static String path(String path)
    {
       if (path == null)
@@ -96,6 +97,7 @@ public class Paths
    }
 
    @ApiMethod
+   @Comment(value = "Returns a path string for file makeing sure that the string ends with a / if the file is a directory")
    public static String path(File file)
    {
       try

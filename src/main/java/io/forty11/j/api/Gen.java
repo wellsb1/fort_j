@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
 package io.forty11.j.api;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,7 +62,7 @@ public class Gen
          }
          catch (Error ex)
          {
-            Log.log("Error loading class: " + clazz.getName());
+            Streams.err("Error loading class: " + clazz.getName());
             ex.printStackTrace();
          }
       }
@@ -109,20 +110,48 @@ public class Gen
 
       boolean isVoid = returnType.equals("void");
 
-      Class[] args = method.getParameterTypes();
+      Parameter[] params = method.getParameters();
 
-      buff.append("public static " + returnType + " " + name + "(");
-      for (int i = 0; args != null && i < args.length; i++)
+      buff.append("\r\n\r\n/**");
+
+      Comment c = method.getAnnotation(Comment.class);
+      if (c != null)
       {
-         String arg = getTypeString(args[i], method.isVarArgs() && i == args.length - 1);
+         buff.append("\r\n * ").append(c.value()).append("\r\n * ");
+      }
 
-         buff.append(arg).append(" arg" + i);
-         if (i < args.length - 1)
+      
+      for (int i = 0; params != null && i < params.length; i++)
+      {
+         //TODO make this smart enough to pull text from a params doc annotation 
+         buff.append("\r\n * @param " + params[i].getName());
+      }
 
+      buff.append("\r\n * @see ").append(method.getDeclaringClass().getName()).append("#").append(method.getName()).append("(");
+      for (int i = 0; params != null && i < params.length; i++)
+      {
+         buff.append(params[i].getType()).append(" ").append(params[i].getName());
+         if (i < params.length - 1)
          {
             buff.append(", ");
          }
       }
+      buff.append(")");
+
+      buff.append("\r\n */");
+
+      buff.append("\r\npublic static " + returnType + " " + name + "(");
+
+      for (int i = 0; params != null && i < params.length; i++)
+      {
+         String type = getTypeString(params[i].getType(), method.isVarArgs() && i == params.length - 1);
+         String paramName = params[i].getName();
+         buff.append(type).append(" ").append(paramName);
+
+         if (i < params.length - 1)
+            buff.append(", ");
+      }
+
       buff.append("){ ");
 
       buff.append("try{");
@@ -134,10 +163,12 @@ public class Gen
       buff.append(method.getDeclaringClass().getName()).append(".");
 
       buff.append(name).append("(");
-      for (int i = 0; args != null && i < args.length; i++)
+
+      for (int i = 0; params != null && i < params.length; i++)
       {
-         buff.append("arg" + i);
-         if (i < args.length - 1)
+         buff.append(params[i].getName());
+
+         if (i < params.length - 1)
          {
             buff.append(", ");
          }

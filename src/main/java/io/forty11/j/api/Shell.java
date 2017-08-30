@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,50 +22,40 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.forty11.j.utils.Args;
+
 public class Shell
 {
    @ApiMethod
+   @Comment(value = "Convenience for System.getProperty(\"path.separator\")")
    public static String getPathSeparator()
    {
       return System.getProperty("path.separator");
    }
 
    @ApiMethod
+   @Comment(value = "Convenience for System.getProperty(\"line.separator\")")
    public static String getLineSeparator()
    {
       return System.getProperty("line.separator");
    }
 
    @ApiMethod
-   public static int getTerminalWidth()
-   {
-      try
-      {
-         return Integer.parseInt(run("tput cols"));
-         //Process proc = Runtime.getRuntime().exec("tput cols");
-         //String output = Streams.read(proc.getInputStream());
-         //return Integer.parseInt(output);
-      }
-      catch (Exception ex)
-      {
-
-      }
-      return 120;
-   }
-
-   @ApiMethod
+   @Comment(value = "Executes a system command and returns the content of that processes standard_out as a string")
    public static String run(String cmd) throws Exception
    {
-      return run(Strings.parseArgs(cmd));
+      return run(Args.parse(cmd));
    }
 
    @ApiMethod
+   @Comment(value = "Executes a system command and returns the content of that processes standard_out as a string")
    public static String run(List<String> cmd) throws Exception
    {
       return run(cmd.toArray(new String[cmd.size()]));
    }
 
    @ApiMethod
+   @Comment(value = "Executes a system command and returns the content of that processes standard_out as a string")
    public static String run(String... cmd) throws Exception
    {
       String debug = new ArrayList(Arrays.asList(cmd)).toString();

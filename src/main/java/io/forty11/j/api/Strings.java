@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,29 +32,23 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 public class Strings
 {
+
    @ApiMethod
-   public static boolean contains(String string, String target)
+   @Comment(value = "Concatenates pieces[0] + glue + pieces[n]...")
+   public static String implode(String glue, Object... pieces)
    {
-      if (string == null || target == null)
-         return false;
-      else
-         return string.indexOf(target) >= 0;
+      StringBuffer str = new StringBuffer("");
+      for (int i = 0; pieces != null && i < pieces.length; i++)
+      {
+         str.append(pieces[i]);
+         if (i < pieces.length - 1)
+            str.append(glue);
+      }
+      return str.toString();
    }
 
-   //   @ApiMethod
-   //   public static String implode(String glue, Object... pieces)
-   //   {
-   //      StringBuffer str = new StringBuffer("");
-   //      for (int i = 0; pieces != null && i < pieces.length; i++)
-   //      {
-   //         str.append(pieces[i]);
-   //         if (i < pieces.length - 1)
-   //            str.append(glue);
-   //      }
-   //      return str.toString();
-   //   }
-
    @ApiMethod
+   @Comment(value = "Same as String.split() but performes a trim() on each piece and returns an list instead of an array")
    public static List<String> explode(String str, String delim)
    {
       String[] parts = str.split(delim);
@@ -66,6 +60,18 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Shortcut for string.indexOf(target) >= 0 that checks for nulls")
+   public static boolean contains(String string, String target)
+   {
+      if (string == null || target == null)
+         return false;
+      else
+         return string.indexOf(target) >= 0;
+   }
+
+   
+   @ApiMethod
+   @Comment(value = "Upper case the first letter of the string")
    public static String startUpper(String str)
    {
       if (!Lang.empty(str))
@@ -76,6 +82,7 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Lower case the first letter of the string")
    public static String startLower(String str)
    {
       if (!Lang.empty(str))
@@ -86,6 +93,7 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Tries to make a pretty title case string with spaces out of a camel case style string")
    public static String fromCamelCase(String string)
    {
       //convert camel case style
@@ -132,6 +140,7 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Returns a lower cased string replacing \"[^a-z0-9]+\" with \"-\"")
    public static String slugify(String str)
    {
       if (str == null)
@@ -155,18 +164,21 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Hash the bytes with SHA-1")
    public static String sha1(byte[] bytes)
    {
       return hash(bytes, "SHA-1");
    }
 
    @ApiMethod
+   @Comment(value = "Hash the bytes with MD5")
    public static String md5(byte[] bytes)
    {
       return hash(bytes, "MD5");
    }
 
    @ApiMethod
+   @Comment(value = "Hash the bytes with the given algorithm")
    public static String hash(byte[] byteArr, String algorithm)
    {
       try
@@ -196,6 +208,7 @@ public class Strings
     * @return
     */
    @ApiMethod
+   @Comment(value = "Replaces ${key} style text literals in str with values from the map")
    public static String replaceAll(String str, Map<String, Object> values)
    {
       StringBuffer buff = new StringBuffer("");
@@ -213,6 +226,7 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Prepends spaces to the begining of each line")
    public static String indent(String str, int indent)
    {
       try
@@ -235,6 +249,7 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Performans a word wrap limiting each line to the specified number of characters")
    public static String wrap(String str, int wrap)
    {
       StringBuffer buff = new StringBuffer();
@@ -259,6 +274,7 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Limits line to <code>length</code> characters inclusive of \"...\" trailing characters indicating the string was in fact choppped")
    public static String chop(String str, int length)
    {
       if (str.length() > length)
@@ -270,6 +286,7 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Appends spaces until the string is at least <code>length</code> characters long")
    public static String pad(String str, int length)
    {
       if (str.length() > length)
@@ -292,39 +309,41 @@ public class Strings
       return string;
    }
 
+   //   @ApiMethod
+   //   public static String replace(String string, String[][] replacements)
+   //   {
+   //      boolean changed = false;
+   //      int limiter = 0;
+   //      do
+   //      {
+   //         changed = false;
+   //         limiter++;
+   //
+   //         for (int i = 0; i < replacements.length; i++)
+   //         {
+   //            if (string.indexOf(replacements[i][0]) >= 0)
+   //            {
+   //               string = string.replace(replacements[i][0], replacements[i][1]);
+   //               changed = true;
+   //               break;
+   //            }
+   //         }
+   //
+   //      }
+   //      while (changed && limiter < 100);
+   //
+   //      return string;
+   //   }
+
    @ApiMethod
-   public static String replace(String string, String[][] replacements)
-   {
-      boolean changed = false;
-      int limiter = 0;
-      do
-      {
-         changed = false;
-         limiter++;
-
-         for (int i = 0; i < replacements.length; i++)
-         {
-            if (string.indexOf(replacements[i][0]) >= 0)
-            {
-               string = string.replace(replacements[i][0], replacements[i][1]);
-               changed = true;
-               break;
-            }
-         }
-
-      }
-      while (changed && limiter < 100);
-
-      return string;
-   }
-
-   @ApiMethod
+   @Comment(value = "Returns true if the string contains a * or a ?")
    public static boolean isWildcard(String str)
    {
       return str.indexOf('*') >= 0 || str.indexOf('?') >= 0;
    }
 
    @ApiMethod
+   @Comment(value = "Pattern matches the string using ? to indicate any one single value and * to indicate any 0-n multiple values")
    public static boolean wildcardMatch(String wildcard, String string)
    {
       if (Lang.empty(wildcard) || Lang.empty(string))
@@ -337,6 +356,7 @@ public class Strings
    }
 
    @ApiMethod
+   @Comment(value = "Performs string.matches() but also checks for null")
    public static boolean regexMatch(String regex, String string)
    {
       if (Lang.empty(regex) || Lang.empty(string))
@@ -351,6 +371,7 @@ public class Strings
     * @return
     */
    @ApiMethod
+   @Comment(value = "Converts a * and ? wildcard style patterns into regex style pattern")
    public static String wildcardToRegex(String wildcard)
    {
       wildcard = wildcard.replace("**", "*");
@@ -452,6 +473,7 @@ public class Strings
     * five</em> of the above characters.
     */
    @ApiMethod
+   @Comment(value = "Escape HTML special characters so this string can be displayed as text not marketup in an HTML document")
    public static String forHTML(String aText)
    {
       final StringBuilder result = new StringBuilder();
@@ -530,6 +552,7 @@ public class Strings
     * ampersand is escaped).
     */
    @ApiMethod
+   @Comment(value = "Does URLEncoder.encode() but throws a RuntimeException instead of an UnsupportedEncodingException")
    public static String forURL(String aURLFragment)
    {
       String result = null;
@@ -562,6 +585,7 @@ public class Strings
    *  is good for escaping to produce valid XML, but not for producing safe HTML.</span>
    */
    @ApiMethod
+   @Comment(value = "Escape xml tag characters so that this can be rendered as text instead of markup when included in a xml/html document")
    public static String forXML(String aText)
    {
       final StringBuilder result = new StringBuilder();
@@ -605,10 +629,11 @@ public class Strings
    * replaced by their escaped equivalents.
    */
    @ApiMethod
-   public static String toDisableTags(String aText)
+   @Comment(value = "Return text with all '<' and '>' characters replaced by their escaped equivalents.")
+   public static String toDisableTags(String text)
    {
       final StringBuilder result = new StringBuilder();
-      final StringCharacterIterator iterator = new StringCharacterIterator(aText);
+      final StringCharacterIterator iterator = new StringCharacterIterator(text);
       char character = iterator.current();
       while (character != CharacterIterator.DONE)
       {
@@ -650,6 +675,7 @@ public class Strings
    *
    */
    @ApiMethod
+   @Comment(value = "Escapes any regex specicial characters")
    public static String forRegex(String aRegexFragment)
    {
       final StringBuilder result = new StringBuilder();
@@ -732,22 +758,6 @@ public class Strings
       return result.toString();
    }
 
-   /**
-   * Disable all <tt><SCRIPT></tt> tags in <tt>aText</tt>.
-   *
-   * <P>Insensitive to case.
-   */
-   @ApiMethod
-   public static String forScriptTagsOnly(String aText)
-   {
-      String result = null;
-      Matcher matcher = SCRIPT.matcher(aText);
-      result = matcher.replaceAll("&lt;SCRIPT>");
-      matcher = SCRIPT_END.matcher(result);
-      result = matcher.replaceAll("&lt;/SCRIPT>");
-      return result;
-   }
-
    @ApiMethod
    public static String substring(String string, String regex, int group)
    {
@@ -759,84 +769,4 @@ public class Strings
       return null;
    }
 
-   private static final Pattern SCRIPT     = Pattern.compile("<SCRIPT>", Pattern.CASE_INSENSITIVE);
-   private static final Pattern SCRIPT_END = Pattern.compile("</SCRIPT>", Pattern.CASE_INSENSITIVE);
-
-   /**
-    * Parses the specified command line into an array of individual arguments.
-    * Arguments containing spaces should be enclosed in quotes.
-    * Quotes that should be in the argument string should be escaped with a
-    * preceding backslash ('\') character.  Backslash characters that should
-    * be in the argument string should also be escaped with a preceding
-    * backslash character.
-    * @param args the command line to parse
-    * @return an argument array representing the specified command line.
-    */
-   @ApiMethod
-   public static String[] parseArgs(String args)
-   {
-      List resultBuffer = new java.util.ArrayList();
-
-      if (args != null)
-      {
-         args = args.trim();
-         int z = args.length();
-         boolean insideQuotes = false;
-         StringBuffer buf = new StringBuffer();
-
-         for (int i = 0; i < z; ++i)
-         {
-            char c = args.charAt(i);
-            if (c == '"')
-            {
-               appendToBuffer(resultBuffer, buf);
-               insideQuotes = !insideQuotes;
-            }
-            else if (c == '\\')
-            {
-               if ((z > i + 1) && ((args.charAt(i + 1) == '"') || (args.charAt(i + 1) == '\\')))
-               {
-                  buf.append(args.charAt(i + 1));
-                  ++i;
-               }
-               else
-               {
-                  buf.append("\\");
-               }
-            }
-            else
-            {
-               if (insideQuotes)
-               {
-                  buf.append(c);
-               }
-               else
-               {
-                  if (Character.isWhitespace(c))
-                  {
-                     appendToBuffer(resultBuffer, buf);
-                  }
-                  else
-                  {
-                     buf.append(c);
-                  }
-               }
-            }
-         }
-         appendToBuffer(resultBuffer, buf);
-
-      }
-
-      String[] result = new String[resultBuffer.size()];
-      return ((String[]) resultBuffer.toArray(result));
-   }
-
-   private static void appendToBuffer(List resultBuffer, StringBuffer buf)
-   {
-      if (buf.length() > 0)
-      {
-         resultBuffer.add(buf.toString());
-         buf.setLength(0);
-      }
-   }
 }

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,11 +20,94 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.forty11.j.api.ApiMethod;
+import io.forty11.j.api.Comment;
+
 public class Args
 {
+   /**
+    * Parses the specified command line into an array of individual arguments.
+    * Arguments containing spaces should be enclosed in quotes.
+    * Quotes that should be in the argument string should be escaped with a
+    * preceding backslash ('\') character.  Backslash characters that should
+    * be in the argument string should also be escaped with a preceding
+    * backslash character.
+    * @param args the command line to parse
+    * @return an argument array representing the specified command line.
+    */
+   @ApiMethod
+   @Comment(value = "Tokenizes the string using \" to enclose strings with spaces and \\ to escape quotes in a string or other literal backslashes")
+   public static String[] parse(String args)
+   {
+      List resultBuffer = new java.util.ArrayList();
+
+      if (args != null)
+      {
+         args = args.trim();
+         int z = args.length();
+         boolean insideQuotes = false;
+         StringBuffer buf = new StringBuffer();
+
+         for (int i = 0; i < z; ++i)
+         {
+            char c = args.charAt(i);
+            if (c == '"')
+            {
+               appendToBuffer(resultBuffer, buf);
+               insideQuotes = !insideQuotes;
+            }
+            else if (c == '\\')
+            {
+               if ((z > i + 1) && ((args.charAt(i + 1) == '"') || (args.charAt(i + 1) == '\\')))
+               {
+                  buf.append(args.charAt(i + 1));
+                  ++i;
+               }
+               else
+               {
+                  buf.append("\\");
+               }
+            }
+            else
+            {
+               if (insideQuotes)
+               {
+                  buf.append(c);
+               }
+               else
+               {
+                  if (Character.isWhitespace(c))
+                  {
+                     appendToBuffer(resultBuffer, buf);
+                  }
+                  else
+                  {
+                     buf.append(c);
+                  }
+               }
+            }
+         }
+         appendToBuffer(resultBuffer, buf);
+
+      }
+
+      String[] result = new String[resultBuffer.size()];
+      return ((String[]) resultBuffer.toArray(result));
+   }
+
+   private static void appendToBuffer(List resultBuffer, StringBuffer buf)
+   {
+      if (buf.length() > 0)
+      {
+         resultBuffer.add(buf.toString());
+         buf.setLength(0);
+      }
+   }
+
    Map<String, String> args = new HashMap();
 
    public Args(String[] args)
