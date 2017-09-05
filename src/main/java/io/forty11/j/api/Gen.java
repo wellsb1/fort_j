@@ -121,16 +121,16 @@ public class Gen
       }
 
       
-      for (int i = 0; params != null && i < params.length; i++)
-      {
-         //TODO make this smart enough to pull text from a params doc annotation 
-         buff.append("\r\n * @param " + params[i].getName());
-      }
+//      for (int i = 0; params != null && i < params.length; i++)
+//      {
+//         //TODO make this smart enough to pull text from a params doc annotation 
+//         buff.append("\r\n * @param " + params[i].getName());
+//      }
 
       buff.append("\r\n * @see ").append(method.getDeclaringClass().getName()).append("#").append(method.getName()).append("(");
       for (int i = 0; params != null && i < params.length; i++)
       {
-         buff.append(params[i].getType()).append(" ").append(params[i].getName());
+         buff.append(params[i].getType().getName());//.append(" ").append(params[i].getName());
          if (i < params.length - 1)
          {
             buff.append(", ");

@@ -26,23 +26,17 @@ package io.forty11.j;
  */
 public class J
 {
-   /*
-   +------------------------------------------------------------------------------+
-   | Start Genreated Code
-   +------------------------------------------------------------------------------+
-   */
 
    /**
     * Creats a list from varargs
     * 
-    * @param array
-    * @see io.forty11.j.api.Lang#asList(class [Ljava.lang.Object; array)
+    * @see io.forty11.j.api.Lang#asList([Ljava.lang.Object;)
     */
-   public static java.util.List asList(java.lang.Object... array)
+   public static java.util.List asList(java.lang.Object... arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.asList(array);
+         return io.forty11.j.api.Lang.asList(arg0);
       }
       catch (Exception ex)
       {
@@ -53,14 +47,13 @@ public class J
    /**
     * Convenience to turn an Iterable into a list
     * 
-    * @param it
-    * @see io.forty11.j.api.Lang#asList(interface java.lang.Iterable it)
+    * @see io.forty11.j.api.Lang#asList(java.lang.Iterable)
     */
-   public static java.util.List asList(java.lang.Iterable it)
+   public static java.util.List asList(java.lang.Iterable arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.asList(it);
+         return io.forty11.j.api.Lang.asList(arg0);
       }
       catch (Exception ex)
       {
@@ -71,14 +64,13 @@ public class J
    /**
     * Convenience to turn an Iterator into a list
     * 
-    * @param it
-    * @see io.forty11.j.api.Lang#asList(interface java.util.Iterator it)
+    * @see io.forty11.j.api.Lang#asList(java.util.Iterator)
     */
-   public static java.util.List asList(java.util.Iterator it)
+   public static java.util.List asList(java.util.Iterator arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.asList(it);
+         return io.forty11.j.api.Lang.asList(arg0);
       }
       catch (Exception ex)
       {
@@ -87,14 +79,13 @@ public class J
    }
 
    /**
-    * @param it
-    * @see io.forty11.j.api.Lang#asList(class io.forty11.j.it.It it)
+    * @see io.forty11.j.api.Lang#asList(io.forty11.j.it.It)
     */
-   public static java.util.List asList(io.forty11.j.it.It it)
+   public static java.util.List asList(io.forty11.j.it.It arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.asList(it);
+         return io.forty11.j.api.Lang.asList(arg0);
       }
       catch (Exception ex)
       {
@@ -105,14 +96,13 @@ public class J
    /**
     * Faster way to call Double.parseDouble(str.trim()).  Null returned as -1
     * 
-    * @param str
-    * @see io.forty11.j.api.Lang#atod(class java.lang.String str)
+    * @see io.forty11.j.api.Lang#atod(java.lang.String)
     */
-   public static double atod(java.lang.String str)
+   public static double atod(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.atod(str);
+         return io.forty11.j.api.Lang.atod(arg0);
       }
       catch (Exception ex)
       {
@@ -123,14 +113,13 @@ public class J
    /**
     * Faster way to call Float.parseFloat(str.trim()).  Null returned as -1
     * 
-    * @param str
-    * @see io.forty11.j.api.Lang#atof(class java.lang.String str)
+    * @see io.forty11.j.api.Lang#atof(java.lang.String)
     */
-   public static float atof(java.lang.String str)
+   public static float atof(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.atof(str);
+         return io.forty11.j.api.Lang.atof(arg0);
       }
       catch (Exception ex)
       {
@@ -141,14 +130,13 @@ public class J
    /**
     * Faster way to call Integer.parseInt(str.trim()).  Null returned as -1
     * 
-    * @param str
-    * @see io.forty11.j.api.Lang#atoi(class java.lang.String str)
+    * @see io.forty11.j.api.Lang#atoi(java.lang.String)
     */
-   public static int atoi(java.lang.String str)
+   public static int atoi(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.atoi(str);
+         return io.forty11.j.api.Lang.atoi(arg0);
       }
       catch (Exception ex)
       {
@@ -159,14 +147,13 @@ public class J
    /**
     * Faster way to call Long.parseLong(str.trim()).  Null returned as -1
     * 
-    * @param str
-    * @see io.forty11.j.api.Lang#atol(class java.lang.String str)
+    * @see io.forty11.j.api.Lang#atol(java.lang.String)
     */
-   public static long atol(java.lang.String str)
+   public static long atol(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.atol(str);
+         return io.forty11.j.api.Lang.atol(arg0);
       }
       catch (Exception ex)
       {
@@ -175,14 +162,13 @@ public class J
    }
 
    /**
-    * @param node
-    * @see io.forty11.j.api.Xml#childElements(interface org.w3c.dom.Node node)
+    * @see io.forty11.j.api.Xml#childElements(org.w3c.dom.Node)
     */
-   public static java.util.List childElements(org.w3c.dom.Node node)
+   public static java.util.List childElements(org.w3c.dom.Node arg0)
    {
       try
       {
-         return io.forty11.j.api.Xml.childElements(node);
+         return io.forty11.j.api.Xml.childElements(arg0);
       }
       catch (Exception ex)
       {
@@ -193,15 +179,13 @@ public class J
    /**
     * Limits line to <code>length</code> characters inclusive of "..." trailing characters indicating the string was in fact choppped
     * 
-    * @param str
-    * @param length
-    * @see io.forty11.j.api.Strings#chop(class java.lang.String str, int length)
+    * @see io.forty11.j.api.Strings#chop(java.lang.String, int)
     */
-   public static java.lang.String chop(java.lang.String str, int length)
+   public static java.lang.String chop(java.lang.String arg0, int arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.chop(str, length);
+         return io.forty11.j.api.Strings.chop(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -210,15 +194,13 @@ public class J
    }
 
    /**
-    * @param path
-    * @param index
-    * @see io.forty11.j.api.Paths#chunk(class java.lang.String path, int index)
+    * @see io.forty11.j.api.Paths#chunk(java.lang.String, int)
     */
-   public static java.lang.String chunk(java.lang.String path, int index)
+   public static java.lang.String chunk(java.lang.String arg0, int arg1)
    {
       try
       {
-         return io.forty11.j.api.Paths.chunk(path, index);
+         return io.forty11.j.api.Paths.chunk(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -227,14 +209,13 @@ public class J
    }
 
    /**
-    * @param path
-    * @see io.forty11.j.api.Paths#chunks(class java.lang.String path)
+    * @see io.forty11.j.api.Paths#chunks(java.lang.String)
     */
-   public static java.lang.String[] chunks(java.lang.String path)
+   public static java.lang.String[] chunks(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Paths.chunks(path);
+         return io.forty11.j.api.Paths.chunks(arg0);
       }
       catch (Exception ex)
       {
@@ -245,14 +226,13 @@ public class J
    /**
     * Utility to call an close() method on supplied objects and completely ignore any errors
     * 
-    * @param toClose
-    * @see io.forty11.j.api.Lang#close(class [Ljava.lang.Object; toClose)
+    * @see io.forty11.j.api.Lang#close([Ljava.lang.Object;)
     */
-   public static void close(java.lang.Object... toClose)
+   public static void close(java.lang.Object... arg0)
    {
       try
       {
-         io.forty11.j.api.Lang.close(toClose);
+         io.forty11.j.api.Lang.close(arg0);
       }
       catch (Exception ex)
       {
@@ -263,15 +243,13 @@ public class J
    /**
     * Shortcut for string.indexOf(target) >= 0 that checks for nulls
     * 
-    * @param string
-    * @param target
-    * @see io.forty11.j.api.Strings#contains(class java.lang.String string, class java.lang.String target)
+    * @see io.forty11.j.api.Strings#contains(java.lang.String, java.lang.String)
     */
-   public static boolean contains(java.lang.String string, java.lang.String target)
+   public static boolean contains(java.lang.String arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.contains(string, target);
+         return io.forty11.j.api.Strings.contains(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -280,15 +258,13 @@ public class J
    }
 
    /**
-    * @param src
-    * @param dst
-    * @see io.forty11.j.api.Files#copy(class java.io.File src, class java.io.File dst)
+    * @see io.forty11.j.api.Files#copy(java.io.File, java.io.File, java.io.File)
     */
-   public static void copy(java.io.File src, java.io.File dst)
+   public static boolean copy(java.io.File arg0, java.io.File arg1, java.io.File arg2)
    {
       try
       {
-         io.forty11.j.api.Files.copy(src, dst);
+         return io.forty11.j.api.Files.copy(arg0, arg1, arg2);
       }
       catch (Exception ex)
       {
@@ -297,16 +273,13 @@ public class J
    }
 
    /**
-    * @param srcDir
-    * @param srcFile
-    * @param dstDir
-    * @see io.forty11.j.api.Files#copy(class java.io.File srcDir, class java.io.File srcFile, class java.io.File dstDir)
+    * @see io.forty11.j.api.Files#copy(java.io.File, java.io.File)
     */
-   public static boolean copy(java.io.File srcDir, java.io.File srcFile, java.io.File dstDir)
+   public static void copy(java.io.File arg0, java.io.File arg1)
    {
       try
       {
-         return io.forty11.j.api.Files.copy(srcDir, srcFile, dstDir);
+         io.forty11.j.api.Files.copy(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -317,15 +290,13 @@ public class J
    /**
     * A best effort field by field shallow copier that will ignore all errors. This does not recurse.
     * 
-    * @param src
-    * @param dest
-    * @see io.forty11.j.api.Lang#copyFields(class java.lang.Object src, class java.lang.Object dest)
+    * @see io.forty11.j.api.Lang#copyFields(java.lang.Object, java.lang.Object)
     */
-   public static void copyFields(java.lang.Object src, java.lang.Object dest)
+   public static void copyFields(java.lang.Object arg0, java.lang.Object arg1)
    {
       try
       {
-         io.forty11.j.api.Lang.copyFields(src, dest);
+         io.forty11.j.api.Lang.copyFields(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -334,14 +305,13 @@ public class J
    }
 
    /**
-    * @param file
-    * @see io.forty11.j.api.Files#createTempFile(class java.io.File file)
+    * @see io.forty11.j.api.Files#createTempFile(java.io.File)
     */
-   public static java.io.File createTempFile(java.io.File file)
+   public static java.io.File createTempFile(java.io.File arg0)
    {
       try
       {
-         return io.forty11.j.api.Files.createTempFile(file);
+         return io.forty11.j.api.Files.createTempFile(arg0);
       }
       catch (Exception ex)
       {
@@ -350,33 +320,13 @@ public class J
    }
 
    /**
-    * @param fileName
-    * @see io.forty11.j.api.Files#createTempFile(class java.lang.String fileName)
+    * @see io.forty11.j.api.Files#createTempFile(java.lang.String)
     */
-   public static java.io.File createTempFile(java.lang.String fileName)
+   public static java.io.File createTempFile(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Files.createTempFile(fileName);
-      }
-      catch (Exception ex)
-      {
-         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
-      }
-   }
-
-   /**
-    * Faster way to apply a SimpleDateForamt without having to worry about Exceptions
-    * 
-    * @param date
-    * @param format
-    * @see io.forty11.j.api.Lang#date(class java.lang.String date, class java.lang.String format)
-    */
-   public static java.util.Date date(java.lang.String date, java.lang.String format)
-   {
-      try
-      {
-         return io.forty11.j.api.Lang.date(date, format);
+         return io.forty11.j.api.Files.createTempFile(arg0);
       }
       catch (Exception ex)
       {
@@ -387,14 +337,13 @@ public class J
    /**
     * Attempts an ISO8601 data parse whic is yyyy-MM-dd|yyyyMMdd][T(hh:mm[:ss[.sss]]|hhmm[ss[.sss]])]?[Z|[+-]hh[:]mm], then yyyy-MM-dd, then MM/dd/yy, then MM/dd/yyyy, then yyyyMMdd 
     * 
-    * @param date
-    * @see io.forty11.j.api.Lang#date(class java.lang.String date)
+    * @see io.forty11.j.api.Lang#date(java.lang.String)
     */
-   public static java.util.Date date(java.lang.String date)
+   public static java.util.Date date(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.date(date);
+         return io.forty11.j.api.Lang.date(arg0);
       }
       catch (Exception ex)
       {
@@ -403,14 +352,30 @@ public class J
    }
 
    /**
-    * @param file
-    * @see io.forty11.j.api.Files#delete(class java.io.File file)
+    * Faster way to apply a SimpleDateForamt without having to worry about Exceptions
+    * 
+    * @see io.forty11.j.api.Lang#date(java.lang.String, java.lang.String)
     */
-   public static boolean delete(java.io.File file)
+   public static java.util.Date date(java.lang.String arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Files.delete(file);
+         return io.forty11.j.api.Lang.date(arg0, arg1);
+      }
+      catch (Exception ex)
+      {
+         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
+      }
+   }
+
+   /**
+    * @see io.forty11.j.api.Files#delete(java.io.File)
+    */
+   public static boolean delete(java.io.File arg0)
+   {
+      try
+      {
+         return io.forty11.j.api.Files.delete(arg0);
       }
       catch (Exception ex)
       {
@@ -421,14 +386,28 @@ public class J
    /**
     * Checks for null or obj.toString().length() == 0
     * 
-    * @param obj
-    * @see io.forty11.j.api.Lang#empty(class java.lang.Object obj)
+    * @see io.forty11.j.api.Lang#empty(java.lang.Object)
     */
-   public static boolean empty(java.lang.Object obj)
+   public static boolean empty(java.lang.Object arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.empty(obj);
+         return io.forty11.j.api.Lang.empty(arg0);
+      }
+      catch (Exception ex)
+      {
+         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
+      }
+   }
+
+   /**
+    * @see io.forty11.j.api.Files#encodeFileName(java.lang.String)
+    */
+   public static java.lang.String encodeFileName(java.lang.String arg0)
+   {
+      try
+      {
+         return io.forty11.j.api.Files.encodeFileName(arg0);
       }
       catch (Exception ex)
       {
@@ -439,15 +418,13 @@ public class J
    /**
     * Forgiving equality checker.  Test for strict == equaltiy, then .equals() equality, then .toString().equals() equality.  Either param can be null.
     * 
-    * @param obj1
-    * @param obj2
-    * @see io.forty11.j.api.Lang#equal(class java.lang.Object obj1, class java.lang.Object obj2)
+    * @see io.forty11.j.api.Lang#equal(java.lang.Object, java.lang.Object)
     */
-   public static boolean equal(java.lang.Object obj1, java.lang.Object obj2)
+   public static boolean equal(java.lang.Object arg0, java.lang.Object arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.equal(obj1, obj2);
+         return io.forty11.j.api.Lang.equal(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -458,14 +435,13 @@ public class J
    /**
     * Writes each object to System.err with a space between
     * 
-    * @param obj
-    * @see io.forty11.j.api.Streams#err(class [Ljava.lang.Object; obj)
+    * @see io.forty11.j.api.Streams#err([Ljava.lang.Object;)
     */
-   public static void err(java.lang.Object... obj)
+   public static void err(java.lang.Object... arg0)
    {
       try
       {
-         io.forty11.j.api.Streams.err(obj);
+         io.forty11.j.api.Streams.err(arg0);
       }
       catch (Exception ex)
       {
@@ -476,15 +452,13 @@ public class J
    /**
     * Same as String.split() but performes a trim() on each piece and returns an list instead of an array
     * 
-    * @param str
-    * @param delim
-    * @see io.forty11.j.api.Strings#explode(class java.lang.String str, class java.lang.String delim)
+    * @see io.forty11.j.api.Strings#explode(java.lang.String, java.lang.String)
     */
-   public static java.util.List explode(java.lang.String str, java.lang.String delim)
+   public static java.util.List explode(java.lang.String arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.explode(str, delim);
+         return io.forty11.j.api.Strings.explode(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -493,14 +467,13 @@ public class J
    }
 
    /**
-    * @param pathOrUrl
-    * @see io.forty11.j.api.Files#file(class java.lang.String pathOrUrl)
+    * @see io.forty11.j.api.Files#file(java.lang.String)
     */
-   public static java.io.File file(java.lang.String pathOrUrl)
+   public static java.io.File file(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Files.file(pathOrUrl);
+         return io.forty11.j.api.Files.file(arg0);
       }
       catch (Exception ex)
       {
@@ -511,14 +484,13 @@ public class J
    /**
     * Attempts to locate the stream as a file, url, or classpath resource
     * 
-    * @param fileOrUrl
-    * @see io.forty11.j.api.Streams#findInputStream(class java.lang.String fileOrUrl)
+    * @see io.forty11.j.api.Streams#findInputStream(java.lang.String)
     */
-   public static java.io.InputStream findInputStream(java.lang.String fileOrUrl)
+   public static java.io.InputStream findInputStream(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Streams.findInputStream(fileOrUrl);
+         return io.forty11.j.api.Streams.findInputStream(arg0);
       }
       catch (Exception ex)
       {
@@ -529,14 +501,13 @@ public class J
    /**
     * Simply calls stream.flush() but throws RuntimeException instead of IOException
     * 
-    * @param stream
-    * @see io.forty11.j.api.Streams#flush(interface java.io.Flushable stream)
+    * @see io.forty11.j.api.Streams#flush(java.io.Flushable)
     */
-   public static void flush(java.io.Flushable stream)
+   public static void flush(java.io.Flushable arg0)
    {
       try
       {
-         io.forty11.j.api.Streams.flush(stream);
+         io.forty11.j.api.Streams.flush(arg0);
       }
       catch (Exception ex)
       {
@@ -547,14 +518,13 @@ public class J
    /**
     * Escape HTML special characters so this string can be displayed as text not marketup in an HTML document
     * 
-    * @param aText
-    * @see io.forty11.j.api.Strings#forHTML(class java.lang.String aText)
+    * @see io.forty11.j.api.Strings#forHTML(java.lang.String)
     */
-   public static java.lang.String forHTML(java.lang.String aText)
+   public static java.lang.String forHTML(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.forHTML(aText);
+         return io.forty11.j.api.Strings.forHTML(arg0);
       }
       catch (Exception ex)
       {
@@ -565,14 +535,13 @@ public class J
    /**
     * Escapes any regex specicial characters
     * 
-    * @param aRegexFragment
-    * @see io.forty11.j.api.Strings#forRegex(class java.lang.String aRegexFragment)
+    * @see io.forty11.j.api.Strings#forRegex(java.lang.String)
     */
-   public static java.lang.String forRegex(java.lang.String aRegexFragment)
+   public static java.lang.String forRegex(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.forRegex(aRegexFragment);
+         return io.forty11.j.api.Strings.forRegex(arg0);
       }
       catch (Exception ex)
       {
@@ -583,14 +552,13 @@ public class J
    /**
     * Does URLEncoder.encode() but throws a RuntimeException instead of an UnsupportedEncodingException
     * 
-    * @param aURLFragment
-    * @see io.forty11.j.api.Strings#forURL(class java.lang.String aURLFragment)
+    * @see io.forty11.j.api.Strings#forURL(java.lang.String)
     */
-   public static java.lang.String forURL(java.lang.String aURLFragment)
+   public static java.lang.String forURL(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.forURL(aURLFragment);
+         return io.forty11.j.api.Strings.forURL(arg0);
       }
       catch (Exception ex)
       {
@@ -601,14 +569,13 @@ public class J
    /**
     * Escape xml tag characters so that this can be rendered as text instead of markup when included in a xml/html document
     * 
-    * @param aText
-    * @see io.forty11.j.api.Strings#forXML(class java.lang.String aText)
+    * @see io.forty11.j.api.Strings#forXML(java.lang.String)
     */
-   public static java.lang.String forXML(java.lang.String aText)
+   public static java.lang.String forXML(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.forXML(aText);
+         return io.forty11.j.api.Strings.forXML(arg0);
       }
       catch (Exception ex)
       {
@@ -617,15 +584,13 @@ public class J
    }
 
    /**
-    * @param date
-    * @param format
-    * @see io.forty11.j.api.Lang#formatDate(class java.util.Date date, class java.lang.String format)
+    * @see io.forty11.j.api.Lang#formatDate(java.util.Date, java.lang.String)
     */
-   public static java.lang.String formatDate(java.util.Date date, java.lang.String format)
+   public static java.lang.String formatDate(java.util.Date arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.formatDate(date, format);
+         return io.forty11.j.api.Lang.formatDate(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -634,14 +599,13 @@ public class J
    }
 
    /**
-    * @param date
-    * @see io.forty11.j.api.Lang#formatDate(class java.util.Date date)
+    * @see io.forty11.j.api.Lang#formatDate(java.util.Date)
     */
-   public static java.lang.String formatDate(java.util.Date date)
+   public static java.lang.String formatDate(java.util.Date arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.formatDate(date);
+         return io.forty11.j.api.Lang.formatDate(arg0);
       }
       catch (Exception ex)
       {
@@ -652,14 +616,13 @@ public class J
    /**
     * Tries to make a pretty title case string with spaces out of a camel case style string
     * 
-    * @param string
-    * @see io.forty11.j.api.Strings#fromCamelCase(class java.lang.String string)
+    * @see io.forty11.j.api.Strings#fromCamelCase(java.lang.String)
     */
-   public static java.lang.String fromCamelCase(java.lang.String string)
+   public static java.lang.String fromCamelCase(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.fromCamelCase(string);
+         return io.forty11.j.api.Strings.fromCamelCase(arg0);
       }
       catch (Exception ex)
       {
@@ -670,14 +633,13 @@ public class J
    /**
     * Tries to "unwrap" nested exceptions looking for the root cause
     * 
-    * @param t
-    * @see io.forty11.j.api.Lang#getCause(class java.lang.Throwable t)
+    * @see io.forty11.j.api.Lang#getCause(java.lang.Throwable)
     */
-   public static java.lang.Throwable getCause(java.lang.Throwable t)
+   public static java.lang.Throwable getCause(java.lang.Throwable arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.getCause(t);
+         return io.forty11.j.api.Lang.getCause(arg0);
       }
       catch (Exception ex)
       {
@@ -686,14 +648,13 @@ public class J
    }
 
    /**
-    * @param line
-    * @see io.forty11.j.api.Lang#getClassFromStackLine(class java.lang.String line)
+    * @see io.forty11.j.api.Lang#getClassFromStackLine(java.lang.String)
     */
-   public static java.lang.Class getClassFromStackLine(java.lang.String line)
+   public static java.lang.Class getClassFromStackLine(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.getClassFromStackLine(line);
+         return io.forty11.j.api.Lang.getClassFromStackLine(arg0);
       }
       catch (Exception ex)
       {
@@ -704,15 +665,13 @@ public class J
    /**
     * Searches the inheritance heirarchy for a field with the the given name and makes sure it is settable via Field.setAccesible
     * 
-    * @param fieldName
-    * @param clazz
-    * @see io.forty11.j.api.Lang#getField(class java.lang.String fieldName, class java.lang.Class clazz)
+    * @see io.forty11.j.api.Lang#getField(java.lang.String, java.lang.Class)
     */
-   public static java.lang.reflect.Field getField(java.lang.String fieldName, java.lang.Class clazz)
+   public static java.lang.reflect.Field getField(java.lang.String arg0, java.lang.Class arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.getField(fieldName, clazz);
+         return io.forty11.j.api.Lang.getField(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -723,14 +682,73 @@ public class J
    /**
     * Gets all the fields from from all classes in the inheritance heirarchy EXCEPT for any class who's packages starts with "java"
     * 
-    * @param clazz
-    * @see io.forty11.j.api.Lang#getFields(class java.lang.Class clazz)
+    * @see io.forty11.j.api.Lang#getFields(java.lang.Class)
     */
-   public static java.util.List getFields(java.lang.Class clazz)
+   public static java.util.List getFields(java.lang.Class arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.getFields(clazz);
+         return io.forty11.j.api.Lang.getFields(arg0);
+      }
+      catch (Exception ex)
+      {
+         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
+      }
+   }
+
+   /**
+    * @see io.forty11.j.api.Files#getFileBaseName(java.lang.String)
+    */
+   public static java.lang.String getFileBaseName(java.lang.String arg0)
+   {
+      try
+      {
+         return io.forty11.j.api.Files.getFileBaseName(arg0);
+      }
+      catch (Exception ex)
+      {
+         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
+      }
+   }
+
+   /**
+    * @see io.forty11.j.api.Files#getFileExtension(java.lang.String)
+    */
+   public static java.lang.String getFileExtension(java.lang.String arg0)
+   {
+      try
+      {
+         return io.forty11.j.api.Files.getFileExtension(arg0);
+      }
+      catch (Exception ex)
+      {
+         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
+      }
+   }
+
+   /**
+    * @see io.forty11.j.api.Files#getFileName(java.lang.String)
+    */
+   public static java.lang.String getFileName(java.lang.String arg0)
+   {
+      try
+      {
+         return io.forty11.j.api.Files.getFileName(arg0);
+      }
+      catch (Exception ex)
+      {
+         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
+      }
+   }
+
+   /**
+    * @see io.forty11.j.api.Files#getFilePath(java.lang.String)
+    */
+   public static java.lang.String getFilePath(java.lang.String arg0)
+   {
+      try
+      {
+         return io.forty11.j.api.Files.getFilePath(arg0);
       }
       catch (Exception ex)
       {
@@ -758,15 +776,13 @@ public class J
    /**
     * Searches the inheritance heirarchy for the first method of the given name (ignores case).  No distinction is made for overloaded method names.
     * 
-    * @param clazz
-    * @param name
-    * @see io.forty11.j.api.Lang#getMethod(class java.lang.Class clazz, class java.lang.String name)
+    * @see io.forty11.j.api.Lang#getMethod(java.lang.Class, java.lang.String)
     */
-   public static java.lang.reflect.Method getMethod(java.lang.Class clazz, java.lang.String name)
+   public static java.lang.reflect.Method getMethod(java.lang.Class arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.getMethod(clazz, name);
+         return io.forty11.j.api.Lang.getMethod(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -777,16 +793,13 @@ public class J
    /**
     * Same as calling Class.getMethod but it returns null intead of throwing a NoSuchMethodException
     * 
-    * @param clazz
-    * @param name
-    * @param args
-    * @see io.forty11.j.api.Lang#getMethod(class java.lang.Class clazz, class java.lang.String name, class [Ljava.lang.Class; args)
+    * @see io.forty11.j.api.Lang#getMethod(java.lang.Class, java.lang.String, [Ljava.lang.Class;)
     */
-   public static java.lang.reflect.Method getMethod(java.lang.Class clazz, java.lang.String name, java.lang.Class... args)
+   public static java.lang.reflect.Method getMethod(java.lang.Class arg0, java.lang.String arg1, java.lang.Class... arg2)
    {
       try
       {
-         return io.forty11.j.api.Lang.getMethod(clazz, name, args);
+         return io.forty11.j.api.Lang.getMethod(arg0, arg1, arg2);
       }
       catch (Exception ex)
       {
@@ -795,14 +808,13 @@ public class J
    }
 
    /**
-    * @param line
-    * @see io.forty11.j.api.Lang#getMethodNameFromStackLine(class java.lang.String line)
+    * @see io.forty11.j.api.Lang#getMethodNameFromStackLine(java.lang.String)
     */
-   public static java.lang.String getMethodNameFromStackLine(java.lang.String line)
+   public static java.lang.String getMethodNameFromStackLine(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.getMethodNameFromStackLine(line);
+         return io.forty11.j.api.Lang.getMethodNameFromStackLine(arg0);
       }
       catch (Exception ex)
       {
@@ -813,15 +825,13 @@ public class J
    /**
     * Returns all methods in the inheritance heirarchy with the given name
     * 
-    * @param clazz
-    * @param name
-    * @see io.forty11.j.api.Lang#getMethods(class java.lang.Class clazz, class java.lang.String name)
+    * @see io.forty11.j.api.Lang#getMethods(java.lang.Class, java.lang.String)
     */
-   public static java.util.List getMethods(java.lang.Class clazz, java.lang.String name)
+   public static java.util.List getMethods(java.lang.Class arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.getMethods(clazz, name);
+         return io.forty11.j.api.Lang.getMethods(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -849,15 +859,13 @@ public class J
    /**
     * Tries to find a bean property getter then defaults to returning the Field value
     * 
-    * @param name
-    * @param object
-    * @see io.forty11.j.api.Lang#getProperty(class java.lang.String name, class java.lang.Object object)
+    * @see io.forty11.j.api.Lang#getProperty(java.lang.String, java.lang.Object)
     */
-   public static java.lang.Object getProperty(java.lang.String name, java.lang.Object object)
+   public static java.lang.Object getProperty(java.lang.String arg0, java.lang.Object arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.getProperty(name, object);
+         return io.forty11.j.api.Lang.getProperty(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -868,16 +876,13 @@ public class J
    /**
     * Tries to find a bean property getter then tries Field value, then defaults to the supplied defaultVal
     * 
-    * @param name
-    * @param object
-    * @param defaultVal
-    * @see io.forty11.j.api.Lang#getProperty(class java.lang.String name, class java.lang.Object object, class java.lang.Object defaultVal)
+    * @see io.forty11.j.api.Lang#getProperty(java.lang.String, java.lang.Object, java.lang.Object)
     */
-   public static java.lang.Object getProperty(java.lang.String name, java.lang.Object object, java.lang.Object defaultVal)
+   public static java.lang.Object getProperty(java.lang.String arg0, java.lang.Object arg1, java.lang.Object arg2)
    {
       try
       {
-         return io.forty11.j.api.Lang.getProperty(name, object, defaultVal);
+         return io.forty11.j.api.Lang.getProperty(arg0, arg1, arg2);
       }
       catch (Exception ex)
       {
@@ -886,15 +891,13 @@ public class J
    }
 
    /**
-    * @param t
-    * @param lines
-    * @see io.forty11.j.api.Lang#getShortCause(class java.lang.Throwable t, int lines)
+    * @see io.forty11.j.api.Lang#getShortCause(java.lang.Throwable)
     */
-   public static java.lang.String getShortCause(java.lang.Throwable t, int lines)
+   public static java.lang.String getShortCause(java.lang.Throwable arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.getShortCause(t, lines);
+         return io.forty11.j.api.Lang.getShortCause(arg0);
       }
       catch (Exception ex)
       {
@@ -903,14 +906,13 @@ public class J
    }
 
    /**
-    * @param t
-    * @see io.forty11.j.api.Lang#getShortCause(class java.lang.Throwable t)
+    * @see io.forty11.j.api.Lang#getShortCause(java.lang.Throwable, int)
     */
-   public static java.lang.String getShortCause(java.lang.Throwable t)
+   public static java.lang.String getShortCause(java.lang.Throwable arg0, int arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.getShortCause(t);
+         return io.forty11.j.api.Lang.getShortCause(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -919,14 +921,13 @@ public class J
    }
 
    /**
-    * @param stackTrace
-    * @see io.forty11.j.api.Lang#getStackTraceLines(class java.lang.Throwable stackTrace)
+    * @see io.forty11.j.api.Lang#getStackTraceLines(java.lang.Throwable)
     */
-   public static java.util.List getStackTraceLines(java.lang.Throwable stackTrace)
+   public static java.util.List getStackTraceLines(java.lang.Throwable arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.getStackTraceLines(stackTrace);
+         return io.forty11.j.api.Lang.getStackTraceLines(arg0);
       }
       catch (Exception ex)
       {
@@ -935,14 +936,13 @@ public class J
    }
 
    /**
-    * @param t
-    * @see io.forty11.j.api.Lang#getStackTraceString(class java.lang.Thread t)
+    * @see io.forty11.j.api.Lang#getStackTraceString(java.lang.Throwable)
     */
-   public static java.lang.String getStackTraceString(java.lang.Thread t)
+   public static java.lang.String getStackTraceString(java.lang.Throwable arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.getStackTraceString(t);
+         return io.forty11.j.api.Lang.getStackTraceString(arg0);
       }
       catch (Exception ex)
       {
@@ -951,14 +951,13 @@ public class J
    }
 
    /**
-    * @param stackTrace
-    * @see io.forty11.j.api.Lang#getStackTraceString(class java.lang.Throwable stackTrace)
+    * @see io.forty11.j.api.Lang#getStackTraceString(java.lang.Thread)
     */
-   public static java.lang.String getStackTraceString(java.lang.Throwable stackTrace)
+   public static java.lang.String getStackTraceString(java.lang.Thread arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.getStackTraceString(stackTrace);
+         return io.forty11.j.api.Lang.getStackTraceString(arg0);
       }
       catch (Exception ex)
       {
@@ -967,15 +966,13 @@ public class J
    }
 
    /**
-    * @param t
-    * @param stackTrace
-    * @see io.forty11.j.api.Lang#getStackTraceString(class java.lang.Thread t, class [Ljava.lang.StackTraceElement; stackTrace)
+    * @see io.forty11.j.api.Lang#getStackTraceString(java.lang.Thread, [Ljava.lang.StackTraceElement;)
     */
-   public static java.lang.String getStackTraceString(java.lang.Thread t, java.lang.StackTraceElement[] stackTrace)
+   public static java.lang.String getStackTraceString(java.lang.Thread arg0, java.lang.StackTraceElement[] arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.getStackTraceString(t, stackTrace);
+         return io.forty11.j.api.Lang.getStackTraceString(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -986,15 +983,13 @@ public class J
    /**
     * Hash the bytes with the given algorithm
     * 
-    * @param byteArr
-    * @param algorithm
-    * @see io.forty11.j.api.Strings#hash(class [B byteArr, class java.lang.String algorithm)
+    * @see io.forty11.j.api.Strings#hash([B, java.lang.String)
     */
-   public static java.lang.String hash(byte[] byteArr, java.lang.String algorithm)
+   public static java.lang.String hash(byte[] arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.hash(byteArr, algorithm);
+         return io.forty11.j.api.Strings.hash(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1005,15 +1000,13 @@ public class J
    /**
     * Concatenates pieces[0] + glue + pieces[n]...
     * 
-    * @param glue
-    * @param pieces
-    * @see io.forty11.j.api.Strings#implode(class java.lang.String glue, class [Ljava.lang.Object; pieces)
+    * @see io.forty11.j.api.Strings#implode(java.lang.String, [Ljava.lang.Object;)
     */
-   public static java.lang.String implode(java.lang.String glue, java.lang.Object... pieces)
+   public static java.lang.String implode(java.lang.String arg0, java.lang.Object... arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.implode(glue, pieces);
+         return io.forty11.j.api.Strings.implode(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1024,15 +1017,13 @@ public class J
    /**
     * Prepends spaces to the begining of each line
     * 
-    * @param str
-    * @param indent
-    * @see io.forty11.j.api.Strings#indent(class java.lang.String str, int indent)
+    * @see io.forty11.j.api.Strings#indent(java.lang.String, int)
     */
-   public static java.lang.String indent(java.lang.String str, int indent)
+   public static java.lang.String indent(java.lang.String arg0, int arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.indent(str, indent);
+         return io.forty11.j.api.Strings.indent(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1041,14 +1032,13 @@ public class J
    }
 
    /**
-    * @param file
-    * @see io.forty11.j.api.Files#isLink(class java.io.File file)
+    * @see io.forty11.j.api.Files#isLink(java.io.File)
     */
-   public static boolean isLink(java.io.File file)
+   public static boolean isLink(java.io.File arg0)
    {
       try
       {
-         return io.forty11.j.api.Files.isLink(file);
+         return io.forty11.j.api.Files.isLink(arg0);
       }
       catch (Exception ex)
       {
@@ -1059,14 +1049,13 @@ public class J
    /**
     * Returns true if the string contains a * or a ?
     * 
-    * @param str
-    * @see io.forty11.j.api.Strings#isWildcard(class java.lang.String str)
+    * @see io.forty11.j.api.Strings#isWildcard(java.lang.String)
     */
-   public static boolean isWildcard(java.lang.String str)
+   public static boolean isWildcard(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.isWildcard(str);
+         return io.forty11.j.api.Strings.isWildcard(arg0);
       }
       catch (Exception ex)
       {
@@ -1075,15 +1064,13 @@ public class J
    }
 
    /**
-    * @param text
-    * @param limit
-    * @see io.forty11.j.api.Lang#limitLines(class java.lang.String text, int limit)
+    * @see io.forty11.j.api.Lang#limitLines(java.lang.String, int)
     */
-   public static java.lang.String limitLines(java.lang.String text, int limit)
+   public static java.lang.String limitLines(java.lang.String arg0, int arg1)
    {
       try
       {
-         return io.forty11.j.api.Lang.limitLines(text, limit);
+         return io.forty11.j.api.Lang.limitLines(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1092,14 +1079,13 @@ public class J
    }
 
    /**
-    * @param dir
-    * @see io.forty11.j.api.Files#listFiles(class java.io.File dir)
+    * @see io.forty11.j.api.Files#listFiles(java.io.File)
     */
-   public static io.forty11.j.it.It listFiles(java.io.File dir)
+   public static io.forty11.j.it.It listFiles(java.io.File arg0)
    {
       try
       {
-         return io.forty11.j.api.Files.listFiles(dir);
+         return io.forty11.j.api.Files.listFiles(arg0);
       }
       catch (Exception ex)
       {
@@ -1108,14 +1094,13 @@ public class J
    }
 
    /**
-    * @param stream
-    * @see io.forty11.j.api.Xml#loadXml(class java.io.InputStream stream)
+    * @see io.forty11.j.api.Xml#loadXml(java.io.InputStream)
     */
-   public static org.w3c.dom.Document loadXml(java.io.InputStream stream)
+   public static org.w3c.dom.Document loadXml(java.io.InputStream arg0)
    {
       try
       {
-         return io.forty11.j.api.Xml.loadXml(stream);
+         return io.forty11.j.api.Xml.loadXml(arg0);
       }
       catch (Exception ex)
       {
@@ -1124,14 +1109,13 @@ public class J
    }
 
    /**
-    * @param textOrUrl
-    * @see io.forty11.j.api.Xml#loadXml(class java.lang.String textOrUrl)
+    * @see io.forty11.j.api.Xml#loadXml(java.lang.String)
     */
-   public static org.w3c.dom.Document loadXml(java.lang.String textOrUrl)
+   public static org.w3c.dom.Document loadXml(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Xml.loadXml(textOrUrl);
+         return io.forty11.j.api.Xml.loadXml(arg0);
       }
       catch (Exception ex)
       {
@@ -1142,14 +1126,13 @@ public class J
    /**
     * Hash the bytes with MD5
     * 
-    * @param bytes
-    * @see io.forty11.j.api.Strings#md5(class [B bytes)
+    * @see io.forty11.j.api.Strings#md5([B)
     */
-   public static java.lang.String md5(byte[] bytes)
+   public static java.lang.String md5(byte[] arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.md5(bytes);
+         return io.forty11.j.api.Strings.md5(arg0);
       }
       catch (Exception ex)
       {
@@ -1158,14 +1141,13 @@ public class J
    }
 
    /**
-    * @param node
-    * @see io.forty11.j.api.Xml#nodePath(interface org.w3c.dom.Node node)
+    * @see io.forty11.j.api.Xml#nodePath(org.w3c.dom.Node)
     */
-   public static java.lang.String nodePath(org.w3c.dom.Node node)
+   public static java.lang.String nodePath(org.w3c.dom.Node arg0)
    {
       try
       {
-         return io.forty11.j.api.Xml.nodePath(node);
+         return io.forty11.j.api.Xml.nodePath(arg0);
       }
       catch (Exception ex)
       {
@@ -1176,14 +1158,13 @@ public class J
    /**
     * Writes each object to System.out with a space between
     * 
-    * @param obj
-    * @see io.forty11.j.api.Streams#out(class [Ljava.lang.Object; obj)
+    * @see io.forty11.j.api.Streams#out([Ljava.lang.Object;)
     */
-   public static void out(java.lang.Object... obj)
+   public static void out(java.lang.Object... arg0)
    {
       try
       {
-         io.forty11.j.api.Streams.out(obj);
+         io.forty11.j.api.Streams.out(arg0);
       }
       catch (Exception ex)
       {
@@ -1194,15 +1175,13 @@ public class J
    /**
     * Appends spaces until the string is at least <code>length</code> characters long
     * 
-    * @param str
-    * @param length
-    * @see io.forty11.j.api.Strings#pad(class java.lang.String str, int length)
+    * @see io.forty11.j.api.Strings#pad(java.lang.String, int)
     */
-   public static java.lang.String pad(java.lang.String str, int length)
+   public static java.lang.String pad(java.lang.String arg0, int arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.pad(str, length);
+         return io.forty11.j.api.Strings.pad(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1213,14 +1192,13 @@ public class J
    /**
     * Tokenizes the string using " to enclose strings with spaces and \ to escape quotes in a string or other literal backslashes
     * 
-    * @param args
-    * @see io.forty11.j.utils.Args#parse(class java.lang.String args)
+    * @see io.forty11.j.utils.Args#parse(java.lang.String)
     */
-   public static java.lang.String[] parse(java.lang.String args)
+   public static java.lang.String[] parse(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.utils.Args.parse(args);
+         return io.forty11.j.utils.Args.parse(arg0);
       }
       catch (Exception ex)
       {
@@ -1229,14 +1207,13 @@ public class J
    }
 
    /**
-    * @param obj
-    * @see io.forty11.j.api.Paths#path(class java.lang.Object obj)
+    * @see io.forty11.j.api.Paths#path(java.lang.Object)
     */
-   public static java.lang.String path(java.lang.Object obj)
+   public static java.lang.String path(java.lang.Object arg0)
    {
       try
       {
-         return io.forty11.j.api.Paths.path(obj);
+         return io.forty11.j.api.Paths.path(arg0);
       }
       catch (Exception ex)
       {
@@ -1247,14 +1224,13 @@ public class J
    /**
     * Returns a path string for file makeing sure that the string ends with a / if the file is a directory
     * 
-    * @param file
-    * @see io.forty11.j.api.Paths#path(class java.io.File file)
+    * @see io.forty11.j.api.Paths#path(java.io.File)
     */
-   public static java.lang.String path(java.io.File file)
+   public static java.lang.String path(java.io.File arg0)
    {
       try
       {
-         return io.forty11.j.api.Paths.path(file);
+         return io.forty11.j.api.Paths.path(arg0);
       }
       catch (Exception ex)
       {
@@ -1265,14 +1241,13 @@ public class J
    /**
     * Attempts to normalize a file path reference removing redundant wild cards and normalizing to "/" as the separator
     * 
-    * @param path
-    * @see io.forty11.j.api.Paths#path(class java.lang.String path)
+    * @see io.forty11.j.api.Paths#path(java.lang.String)
     */
-   public static java.lang.String path(java.lang.String path)
+   public static java.lang.String path(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Paths.path(path);
+         return io.forty11.j.api.Paths.path(arg0);
       }
       catch (Exception ex)
       {
@@ -1281,14 +1256,13 @@ public class J
    }
 
    /**
-    * @param dir
-    * @see io.forty11.j.api.Paths#paths(class java.io.File dir)
+    * @see io.forty11.j.api.Paths#paths(java.io.File)
     */
-   public static io.forty11.j.it.PathIt paths(java.io.File dir)
+   public static io.forty11.j.it.PathIt paths(java.io.File arg0)
    {
       try
       {
-         return io.forty11.j.api.Paths.paths(dir);
+         return io.forty11.j.api.Paths.paths(arg0);
       }
       catch (Exception ex)
       {
@@ -1297,14 +1271,13 @@ public class J
    }
 
    /**
-    * @param url
-    * @see io.forty11.j.api.Paths#paths(class java.net.URL url)
+    * @see io.forty11.j.api.Paths#paths(java.net.URL)
     */
-   public static io.forty11.j.it.PathIt paths(java.net.URL url)
+   public static io.forty11.j.it.PathIt paths(java.net.URL arg0)
    {
       try
       {
-         return io.forty11.j.api.Paths.paths(url);
+         return io.forty11.j.api.Paths.paths(arg0);
       }
       catch (Exception ex)
       {
@@ -1313,14 +1286,13 @@ public class J
    }
 
    /**
-    * @param path
-    * @see io.forty11.j.api.Paths#paths(class java.lang.String path)
+    * @see io.forty11.j.api.Paths#paths(java.lang.String)
     */
-   public static io.forty11.j.it.PathIt paths(java.lang.String path)
+   public static io.forty11.j.it.PathIt paths(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Paths.paths(path);
+         return io.forty11.j.api.Paths.paths(arg0);
       }
       catch (Exception ex)
       {
@@ -1329,14 +1301,13 @@ public class J
    }
 
    /**
-    * @param zip
-    * @see io.forty11.j.api.Paths#paths(class java.util.zip.ZipFile zip)
+    * @see io.forty11.j.api.Paths#paths(java.util.zip.ZipFile)
     */
-   public static io.forty11.j.it.PathIt paths(java.util.zip.ZipFile zip)
+   public static io.forty11.j.it.PathIt paths(java.util.zip.ZipFile arg0)
    {
       try
       {
-         return io.forty11.j.api.Paths.paths(zip);
+         return io.forty11.j.api.Paths.paths(arg0);
       }
       catch (Exception ex)
       {
@@ -1347,15 +1318,13 @@ public class J
    /**
     * Copy all data from src to dst and close the streams
     * 
-    * @param src
-    * @param dest
-    * @see io.forty11.j.api.Streams#pipe(class java.io.InputStream src, class java.io.OutputStream dest)
+    * @see io.forty11.j.api.Streams#pipe(java.io.InputStream, java.io.OutputStream)
     */
-   public static void pipe(java.io.InputStream src, java.io.OutputStream dest)
+   public static void pipe(java.io.InputStream arg0, java.io.OutputStream arg1)
    {
       try
       {
-         io.forty11.j.api.Streams.pipe(src, dest);
+         io.forty11.j.api.Streams.pipe(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1366,15 +1335,13 @@ public class J
    /**
     * Copy all data from src to dst and close the reader/writer
     * 
-    * @param src
-    * @param dest
-    * @see io.forty11.j.api.Streams#pipe(class java.io.Reader src, class java.io.Writer dest)
+    * @see io.forty11.j.api.Streams#pipe(java.io.Reader, java.io.Writer)
     */
-   public static void pipe(java.io.Reader src, java.io.Writer dest)
+   public static void pipe(java.io.Reader arg0, java.io.Writer arg1)
    {
       try
       {
-         io.forty11.j.api.Streams.pipe(src, dest);
+         io.forty11.j.api.Streams.pipe(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1385,14 +1352,13 @@ public class J
    /**
     * Attempts to locate the stream as a file, url, or classpath resource and then reads it all as a string
     * 
-    * @param fileOrUrl
-    * @see io.forty11.j.api.Streams#read(class java.lang.String fileOrUrl)
+    * @see io.forty11.j.api.Streams#read(java.lang.String)
     */
-   public static java.lang.String read(java.lang.String fileOrUrl)
+   public static java.lang.String read(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Streams.read(fileOrUrl);
+         return io.forty11.j.api.Streams.read(arg0);
       }
       catch (Exception ex)
       {
@@ -1403,14 +1369,13 @@ public class J
    /**
     * Read all of the stream to a string and close the stream.  Throws RuntimeException instead of IOException
     * 
-    * @param in
-    * @see io.forty11.j.api.Streams#read(class java.io.InputStream in)
+    * @see io.forty11.j.api.Streams#read(java.io.InputStream)
     */
-   public static java.lang.String read(java.io.InputStream in)
+   public static java.lang.String read(java.io.InputStream arg0)
    {
       try
       {
-         return io.forty11.j.api.Streams.read(in);
+         return io.forty11.j.api.Streams.read(arg0);
       }
       catch (Exception ex)
       {
@@ -1419,14 +1384,13 @@ public class J
    }
 
    /**
-    * @param file
-    * @see io.forty11.j.api.Files#read(class java.io.File file)
+    * @see io.forty11.j.api.Files#read(java.io.File)
     */
-   public static java.lang.String read(java.io.File file)
+   public static java.lang.String read(java.io.File arg0)
    {
       try
       {
-         return io.forty11.j.api.Files.read(file);
+         return io.forty11.j.api.Files.read(arg0);
       }
       catch (Exception ex)
       {
@@ -1437,15 +1401,13 @@ public class J
    /**
     * Performs string.matches() but also checks for null
     * 
-    * @param regex
-    * @param string
-    * @see io.forty11.j.api.Strings#regexMatch(class java.lang.String regex, class java.lang.String string)
+    * @see io.forty11.j.api.Strings#regexMatch(java.lang.String, java.lang.String)
     */
-   public static boolean regexMatch(java.lang.String regex, java.lang.String string)
+   public static boolean regexMatch(java.lang.String arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.regexMatch(regex, string);
+         return io.forty11.j.api.Strings.regexMatch(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1454,16 +1416,13 @@ public class J
    }
 
    /**
-    * @param string
-    * @param target
-    * @param replacement
-    * @see io.forty11.j.api.Strings#replace(class java.lang.String string, class java.lang.String target, class java.lang.String replacement)
+    * @see io.forty11.j.api.Strings#replace(java.lang.String, java.lang.String, java.lang.String)
     */
-   public static java.lang.String replace(java.lang.String string, java.lang.String target, java.lang.String replacement)
+   public static java.lang.String replace(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2)
    {
       try
       {
-         return io.forty11.j.api.Strings.replace(string, target, replacement);
+         return io.forty11.j.api.Strings.replace(arg0, arg1, arg2);
       }
       catch (Exception ex)
       {
@@ -1474,15 +1433,13 @@ public class J
    /**
     * Replaces ${key} style text literals in str with values from the map
     * 
-    * @param str
-    * @param values
-    * @see io.forty11.j.api.Strings#replaceAll(class java.lang.String str, interface java.util.Map values)
+    * @see io.forty11.j.api.Strings#replaceAll(java.lang.String, java.util.Map)
     */
-   public static java.lang.String replaceAll(java.lang.String str, java.util.Map values)
+   public static java.lang.String replaceAll(java.lang.String arg0, java.util.Map arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.replaceAll(str, values);
+         return io.forty11.j.api.Strings.replaceAll(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1491,15 +1448,13 @@ public class J
    }
 
    /**
-    * @param message
-    * @param ex
-    * @see io.forty11.j.api.Lang#rethrow(class java.lang.String message, class java.lang.Throwable ex)
+    * @see io.forty11.j.api.Lang#rethrow(java.lang.Throwable)
     */
-   public static void rethrow(java.lang.String message, java.lang.Throwable e)
+   public static void rethrow(java.lang.Throwable arg0)
    {
       try
       {
-         io.forty11.j.api.Lang.rethrow(message, e);
+         io.forty11.j.api.Lang.rethrow(arg0);
       }
       catch (Exception ex)
       {
@@ -1508,32 +1463,13 @@ public class J
    }
 
    /**
-    * @param ex
-    * @see io.forty11.j.api.Lang#rethrow(class java.lang.Throwable ex)
+    * @see io.forty11.j.api.Lang#rethrow(java.lang.String, java.lang.Throwable)
     */
-   public static void rethrow(java.lang.Throwable e)
+   public static void rethrow(java.lang.String arg0, java.lang.Throwable arg1)
    {
       try
       {
-         io.forty11.j.api.Lang.rethrow(e);
-      }
-      catch (Exception ex)
-      {
-         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
-      }
-   }
-
-   /**
-    * Executes a system command and returns the content of that processes standard_out as a string
-    * 
-    * @param cmd
-    * @see io.forty11.j.api.Shell#run(class java.lang.String cmd)
-    */
-   public static java.lang.String run(java.lang.String cmd)
-   {
-      try
-      {
-         return io.forty11.j.api.Shell.run(cmd);
+         io.forty11.j.api.Lang.rethrow(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1544,14 +1480,13 @@ public class J
    /**
     * Executes a system command and returns the content of that processes standard_out as a string
     * 
-    * @param cmd
-    * @see io.forty11.j.api.Shell#run(interface java.util.List cmd)
+    * @see io.forty11.j.api.Shell#run(java.lang.String)
     */
-   public static java.lang.String run(java.util.List cmd)
+   public static java.lang.String run(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Shell.run(cmd);
+         return io.forty11.j.api.Shell.run(arg0);
       }
       catch (Exception ex)
       {
@@ -1562,14 +1497,30 @@ public class J
    /**
     * Executes a system command and returns the content of that processes standard_out as a string
     * 
-    * @param cmd
-    * @see io.forty11.j.api.Shell#run(class [Ljava.lang.String; cmd)
+    * @see io.forty11.j.api.Shell#run(java.util.List)
     */
-   public static java.lang.String run(java.lang.String... cmd)
+   public static java.lang.String run(java.util.List arg0)
    {
       try
       {
-         return io.forty11.j.api.Shell.run(cmd);
+         return io.forty11.j.api.Shell.run(arg0);
+      }
+      catch (Exception ex)
+      {
+         throw ex instanceof RuntimeException ? (RuntimeException) ex : new RuntimeException(ex);
+      }
+   }
+
+   /**
+    * Executes a system command and returns the content of that processes standard_out as a string
+    * 
+    * @see io.forty11.j.api.Shell#run([Ljava.lang.String;)
+    */
+   public static java.lang.String run(java.lang.String... arg0)
+   {
+      try
+      {
+         return io.forty11.j.api.Shell.run(arg0);
       }
       catch (Exception ex)
       {
@@ -1580,16 +1531,13 @@ public class J
    /**
     * Finds the Field in the inheritance heirarchy and sets it
     * 
-    * @param name
-    * @param value
-    * @param o
-    * @see io.forty11.j.api.Lang#setField(class java.lang.String name, class java.lang.Object value, class java.lang.Object o)
+    * @see io.forty11.j.api.Lang#setField(java.lang.String, java.lang.Object, java.lang.Object)
     */
-   public static void setField(java.lang.String name, java.lang.Object value, java.lang.Object o)
+   public static void setField(java.lang.String arg0, java.lang.Object arg1, java.lang.Object arg2)
    {
       try
       {
-         io.forty11.j.api.Lang.setField(name, value, o);
+         io.forty11.j.api.Lang.setField(arg0, arg1, arg2);
       }
       catch (Exception ex)
       {
@@ -1600,14 +1548,13 @@ public class J
    /**
     * Hash the bytes with SHA-1
     * 
-    * @param bytes
-    * @see io.forty11.j.api.Strings#sha1(class [B bytes)
+    * @see io.forty11.j.api.Strings#sha1([B)
     */
-   public static java.lang.String sha1(byte[] bytes)
+   public static java.lang.String sha1(byte[] arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.sha1(bytes);
+         return io.forty11.j.api.Strings.sha1(arg0);
       }
       catch (Exception ex)
       {
@@ -1618,14 +1565,13 @@ public class J
    /**
     * Easy way to call Thread.sleep(long) without worrying about try/catch for InterruptedException
     * 
-    * @param millis
-    * @see io.forty11.j.api.Lang#sleep(long millis)
+    * @see io.forty11.j.api.Lang#sleep(long)
     */
-   public static void sleep(long millis)
+   public static void sleep(long arg0)
    {
       try
       {
-         io.forty11.j.api.Lang.sleep(millis);
+         io.forty11.j.api.Lang.sleep(arg0);
       }
       catch (Exception ex)
       {
@@ -1636,14 +1582,13 @@ public class J
    /**
     * Returns a lower cased string replacing "[^a-z0-9]+" with "-"
     * 
-    * @param str
-    * @see io.forty11.j.api.Strings#slugify(class java.lang.String str)
+    * @see io.forty11.j.api.Strings#slugify(java.lang.String)
     */
-   public static java.lang.String slugify(java.lang.String str)
+   public static java.lang.String slugify(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.slugify(str);
+         return io.forty11.j.api.Strings.slugify(arg0);
       }
       catch (Exception ex)
       {
@@ -1652,14 +1597,13 @@ public class J
    }
 
    /**
-    * @param text
-    * @see io.forty11.j.api.Lang#splitLines(class java.lang.String text)
+    * @see io.forty11.j.api.Lang#splitLines(java.lang.String)
     */
-   public static java.lang.String[] splitLines(java.lang.String text)
+   public static java.lang.String[] splitLines(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Lang.splitLines(text);
+         return io.forty11.j.api.Lang.splitLines(arg0);
       }
       catch (Exception ex)
       {
@@ -1670,14 +1614,13 @@ public class J
    /**
     * Lower case the first letter of the string
     * 
-    * @param str
-    * @see io.forty11.j.api.Strings#startLower(class java.lang.String str)
+    * @see io.forty11.j.api.Strings#startLower(java.lang.String)
     */
-   public static java.lang.String startLower(java.lang.String str)
+   public static java.lang.String startLower(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.startLower(str);
+         return io.forty11.j.api.Strings.startLower(arg0);
       }
       catch (Exception ex)
       {
@@ -1688,14 +1631,13 @@ public class J
    /**
     * Upper case the first letter of the string
     * 
-    * @param str
-    * @see io.forty11.j.api.Strings#startUpper(class java.lang.String str)
+    * @see io.forty11.j.api.Strings#startUpper(java.lang.String)
     */
-   public static java.lang.String startUpper(java.lang.String str)
+   public static java.lang.String startUpper(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.startUpper(str);
+         return io.forty11.j.api.Strings.startUpper(arg0);
       }
       catch (Exception ex)
       {
@@ -1704,14 +1646,13 @@ public class J
    }
 
    /**
-    * @param fileName
-    * @see io.forty11.j.api.Files#sterilizeFileName(class java.lang.String fileName)
+    * @see io.forty11.j.api.Files#sterilizeFileName(java.lang.String)
     */
-   public static java.lang.String sterilizeFileName(java.lang.String fileName)
+   public static java.lang.String sterilizeFileName(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Files.sterilizeFileName(fileName);
+         return io.forty11.j.api.Files.sterilizeFileName(arg0);
       }
       catch (Exception ex)
       {
@@ -1720,16 +1661,13 @@ public class J
    }
 
    /**
-    * @param string
-    * @param regex
-    * @param group
-    * @see io.forty11.j.api.Strings#substring(class java.lang.String string, class java.lang.String regex, int group)
+    * @see io.forty11.j.api.Strings#substring(java.lang.String, java.lang.String, int)
     */
-   public static java.lang.String substring(java.lang.String string, java.lang.String regex, int group)
+   public static java.lang.String substring(java.lang.String arg0, java.lang.String arg1, int arg2)
    {
       try
       {
-         return io.forty11.j.api.Strings.substring(string, regex, group);
+         return io.forty11.j.api.Strings.substring(arg0, arg1, arg2);
       }
       catch (Exception ex)
       {
@@ -1757,14 +1695,13 @@ public class J
    /**
     * Return text with all '<' and '>' characters replaced by their escaped equivalents.
     * 
-    * @param text
-    * @see io.forty11.j.api.Strings#toDisableTags(class java.lang.String text)
+    * @see io.forty11.j.api.Strings#toDisableTags(java.lang.String)
     */
-   public static java.lang.String toDisableTags(java.lang.String text)
+   public static java.lang.String toDisableTags(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.toDisableTags(text);
+         return io.forty11.j.api.Strings.toDisableTags(arg0);
       }
       catch (Exception ex)
       {
@@ -1775,15 +1712,13 @@ public class J
    /**
     * Pattern matches the string using ? to indicate any one single value and * to indicate any 0-n multiple values
     * 
-    * @param wildcard
-    * @param string
-    * @see io.forty11.j.api.Strings#wildcardMatch(class java.lang.String wildcard, class java.lang.String string)
+    * @see io.forty11.j.api.Strings#wildcardMatch(java.lang.String, java.lang.String)
     */
-   public static boolean wildcardMatch(java.lang.String wildcard, java.lang.String string)
+   public static boolean wildcardMatch(java.lang.String arg0, java.lang.String arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.wildcardMatch(wildcard, string);
+         return io.forty11.j.api.Strings.wildcardMatch(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1794,14 +1729,13 @@ public class J
    /**
     * Converts a * and ? wildcard style patterns into regex style pattern
     * 
-    * @param wildcard
-    * @see io.forty11.j.api.Strings#wildcardToRegex(class java.lang.String wildcard)
+    * @see io.forty11.j.api.Strings#wildcardToRegex(java.lang.String)
     */
-   public static java.lang.String wildcardToRegex(java.lang.String wildcard)
+   public static java.lang.String wildcardToRegex(java.lang.String arg0)
    {
       try
       {
-         return io.forty11.j.api.Strings.wildcardToRegex(wildcard);
+         return io.forty11.j.api.Strings.wildcardToRegex(arg0);
       }
       catch (Exception ex)
       {
@@ -1812,15 +1746,13 @@ public class J
    /**
     * Performans a word wrap limiting each line to the specified number of characters
     * 
-    * @param str
-    * @param wrap
-    * @see io.forty11.j.api.Strings#wrap(class java.lang.String str, int wrap)
+    * @see io.forty11.j.api.Strings#wrap(java.lang.String, int)
     */
-   public static java.lang.String wrap(java.lang.String str, int wrap)
+   public static java.lang.String wrap(java.lang.String arg0, int arg1)
    {
       try
       {
-         return io.forty11.j.api.Strings.wrap(str, wrap);
+         return io.forty11.j.api.Strings.wrap(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1829,15 +1761,13 @@ public class J
    }
 
    /**
-    * @param file
-    * @param text
-    * @see io.forty11.j.api.Files#write(class java.io.File file, class java.lang.String text)
+    * @see io.forty11.j.api.Files#write(java.lang.String, java.lang.String)
     */
-   public static void write(java.io.File file, java.lang.String text)
+   public static void write(java.lang.String arg0, java.lang.String arg1)
    {
       try
       {
-         io.forty11.j.api.Files.write(file, text);
+         io.forty11.j.api.Files.write(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1846,15 +1776,13 @@ public class J
    }
 
    /**
-    * @param file
-    * @param text
-    * @see io.forty11.j.api.Files#write(class java.lang.String file, class java.lang.String text)
+    * @see io.forty11.j.api.Files#write(java.io.File, java.lang.String)
     */
-   public static void write(java.lang.String file, java.lang.String text)
+   public static void write(java.io.File arg0, java.lang.String arg1)
    {
       try
       {
-         io.forty11.j.api.Files.write(file, text);
+         io.forty11.j.api.Files.write(arg0, arg1);
       }
       catch (Exception ex)
       {
@@ -1862,9 +1790,4 @@ public class J
       }
    }
 
-   /*
-   +------------------------------------------------------------------------------+
-   | End Generated Code
-   +------------------------------------------------------------------------------+
-   */
 }
