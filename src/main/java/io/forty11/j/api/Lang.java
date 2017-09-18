@@ -632,6 +632,11 @@ public class Lang
             if (m.getName().equalsIgnoreCase(name))
                return m;
          }
+         
+         if (clazz != null)
+         {
+            clazz = clazz.getSuperclass();
+         }
       }
       while (clazz != null && !Object.class.equals(clazz));
 
