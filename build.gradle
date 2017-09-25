@@ -1,7 +1,13 @@
+plugins {
+    id 'io.codearte.nexus-staging' version '0.11.0'
+}
+
+
 apply plugin: 'eclipse'
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
+
 
 
 repositories { 
@@ -50,6 +56,7 @@ artifacts {
 signing {
     sign configurations.archives
 }
+
 
 uploadArchives {
   repositories {
