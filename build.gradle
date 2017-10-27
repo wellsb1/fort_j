@@ -1,7 +1,9 @@
+/*
 plugins {
+	// Releasing to Maven Central from Gradle without dealing with Nexus UI
     id 'io.codearte.nexus-staging' version '0.11.0'
 }
-
+*/
 
 apply plugin: 'eclipse'
 apply plugin: 'java'
@@ -24,7 +26,11 @@ sourceCompatibility = 1.6
 /*
  ************************************************************
  * Everything below this is necessary for pushing for Maven 
- * Central
+ * Central.
+ *
+ * NOTICE: Sonatype policy prohibits the removal or any other 
+ * modification of artifacts after they've been published 
+ * to Central.  
  ************************************************************
  */
 version = '0.0.1'
