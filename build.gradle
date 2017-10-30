@@ -1,6 +1,6 @@
 /*
 plugins {
-	// Releasing to Maven Central from Gradle without dealing with Nexus UI
+	// Releasing to Maven Central from Gradle without dealing with Nexus UI by using 'gradle closeAndReleaseRepository'
     id 'io.codearte.nexus-staging' version '0.11.0'
 }
 */
