@@ -2,6 +2,10 @@ package io.forty11.j.json;
 
 import java.util.Iterator;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class JS
 {
    public static JSArray toJSArray(String json)
@@ -31,11 +35,11 @@ public class JS
       }
       catch (Exception ex)
       {
-         String mesg = "Error parsing JSON:" + ex.getMessage();
+         String msg = "Error parsing JSON:" + ex.getMessage();
 
          if (!(ex instanceof JsonParseException))
          {
-            mesg += "\r\nSource:" + js;
+            msg += "\r\nSource:" + js;
          }
 
          throw new RuntimeException("400 Bad Request: '" + js + "'");

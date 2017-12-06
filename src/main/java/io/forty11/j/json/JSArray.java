@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+
 public class JSArray extends JSObject
 {
    List objects = new ArrayList();
