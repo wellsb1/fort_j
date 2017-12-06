@@ -63,6 +63,12 @@ signing {
     sign configurations.archives
 }
 
+dependencies {
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.2'
+	compile (group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.2') {
+    		exclude group: 'com.fasterxml.jackson', module: 'jackson-annotations'
+   	}
+}
 
 uploadArchives {
   repositories {
