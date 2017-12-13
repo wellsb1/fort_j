@@ -1,15 +1,9 @@
-/*
-plugins {
-	// Releasing to Maven Central from Gradle without dealing with Nexus UI by using 'gradle closeAndReleaseRepository'
-    id 'io.codearte.nexus-staging' version '0.11.0'
-}
-*/
-
 apply plugin: 'eclipse'
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'signing'
 
+version = '0.0.1'
+group = 'wellsb1'
 
 
 repositories { 
@@ -17,102 +11,45 @@ repositories {
    mavenCentral() 
 }
 
+
 /********************************************************
  * by default, targetCompatibility == sourceCompatibility  
  */
 sourceCompatibility = 1.6
 
 
-/*
- ************************************************************
- * Everything below this is necessary for pushing for Maven 
- * Central.
- *
- * NOTICE: Sonatype policy prohibits the removal or any other 
- * modification of artifacts after they've been published 
- * to Central.  
- ************************************************************
+jar {
+    baseName 'forty11-j'
+}
+
+/************************************************************
+ * Ensuring source directories are created if they do not 
+ * already exist when running 'gradle eclipse'
+ * Also sets Java 6 as the default target within Eclipse
  */
-version = '0.0.1'
-group = 'com.github.wellsb1'
-
-
-if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-      tasks.withType(Javadoc) {
-        options.addStringOption('Xdoclint:none', '-quiet')
-      }
-    }
-  }
- 
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives jar, javadocJar, sourcesJar
-}
-
-signing {
-    sign configurations.archives
+eclipse {
+	classpath {
+		file {
+			tasks.eclipse.dependsOn(cleanEclipseClasspath)
+			tasks.eclipse.dependsOn("create-dirs")
+		}
+	}
 }
 
 
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-
-	
-      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-	
-      pom.project {
-        name 'FortJ'
-        packaging 'jar'
-        // optionally artifactId can be defined here 
-        description 'Generic Java Utility Classes / Methods.'
-        url 'https://github.com/wellsb1/fort_j'
-
-        scm {  
-          url 'http://github.com/wellsb1/fort_j/tree/master'
-          connection 'scm:git:git://github.com/wellsb1/fort_j.git'
-          developerConnection 'scm:git:ssh://git@github.com:wellsb1/fort_j.git'
-          
-        }
-
-        licenses {
-          license {
-            name 'The Apache License, Version 2.0'
-            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-          }
-        }
-
-        developers {
-          developer {
-            id 'kfrankic'
-            //name ''
-            //email ''
-          }
-          developer {
-            id 'tcollins'
-          }
-          developer {
-            id 'wellsb1'
-          }
-        }
-      }
-    }
-  }
+/************************************************************
+ * This task should be used when creating a new project as
+ * it will create all source and resource directories.  This
+ * task is automatically executed during the 
+ * 'gradle eclipse' command.
+ */
+task "create-dirs" {
+	doLast {
+	   sourceSets*.java.srcDirs*.each { it.mkdirs() }
+	   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+   }
 }
+
+
+
