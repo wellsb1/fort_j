@@ -22,13 +22,16 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+
+import io.forty11.j.J;
 
 public class Strings
 {
@@ -37,6 +40,9 @@ public class Strings
    @Comment(value = "Concatenates pieces[0] + glue + pieces[n]...")
    public static String implode(String glue, Object... pieces)
    {
+      if (pieces != null && pieces.length == 1 && pieces[0] instanceof Collection)
+         pieces = ((Collection) pieces[0]).toArray();
+
       StringBuffer str = new StringBuffer("");
       for (int i = 0; pieces != null && i < pieces.length; i++)
       {
@@ -49,14 +55,26 @@ public class Strings
 
    @ApiMethod
    @Comment(value = "Same as String.split() but performes a trim() on each piece and returns an list instead of an array")
-   public static List<String> explode(String str, String delim)
+   public static List<String> explode(String delim, String... pieces)
    {
-      String[] parts = str.split(delim);
-      for (int i = 0; i < parts.length; i++)
+      List exploded = new ArrayList();
+      for (int i = 0; pieces != null && i < pieces.length; i++)
       {
-         parts[i] = parts[i].trim();
+         if (J.empty(pieces[i]))
+            continue;
+
+         String[] parts = pieces[i].split(delim);
+         for (int j = 0; j < parts.length; j++)
+         {
+            String part = parts[j].trim();
+            if (!J.empty(part))
+            {
+               exploded.add(part);
+            }
+         }
       }
-      return Arrays.asList(parts);
+
+      return exploded;
    }
 
    @ApiMethod
@@ -69,7 +87,6 @@ public class Strings
          return string.indexOf(target) >= 0;
    }
 
-   
    @ApiMethod
    @Comment(value = "Upper case the first letter of the string")
    public static String startUpper(String str)

@@ -257,6 +257,12 @@ public class Lang
    }
 
    @ApiMethod
+   public static void error(String message)
+   {
+      throw new RuntimeException(message);
+   }
+
+   @ApiMethod
    public static void rethrow(Throwable e)
    {
       rethrow(null, e);
@@ -632,7 +638,7 @@ public class Lang
             if (m.getName().equalsIgnoreCase(name))
                return m;
          }
-         
+
          if (clazz != null)
          {
             clazz = clazz.getSuperclass();
