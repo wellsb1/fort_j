@@ -13,6 +13,9 @@ Generic Java Utility Classes / Methods
 
 ### Change Log
 
+5/14/18 - 0.0.3
+ * Updated Lang.empty() to support varargs
+
 5/09/18 - 0.0.2
  
  * Changed method signature on J.explode()

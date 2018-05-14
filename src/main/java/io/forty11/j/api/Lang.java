@@ -40,16 +40,17 @@ public class Lang
    protected static final String[] EMPTY_STRING_ARRAY = new String[0];
 
    @ApiMethod
-   @Comment(value = "Checks for null or obj.toString().length() == 0")
-   public static boolean empty(Object obj)
+   @Comment(value = "Checks for null or obj.toString().length() == 0.  Returns true if all are empty")
+   public static boolean empty(Object... arr)
    {
-      if (obj == null)
-         return true;
-
-      if (obj.toString().length() == 0)
-         return true;
-
-      return false;
+      boolean empty = true;
+      for (int i = 0; empty && arr != null && i < arr.length; i++)
+      {
+         Object obj = arr[i];
+         if (obj != null && obj.toString().length() > 0)
+            empty = false;
+      }
+      return empty;
    }
 
    @ApiMethod

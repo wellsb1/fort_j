@@ -388,7 +388,7 @@ public class J
     * 
     * @see io.forty11.j.api.Lang#empty(java.lang.Object)
     */
-   public static boolean empty(java.lang.Object arg0)
+   public static boolean empty(java.lang.Object... arg0)
    {
       try
       {
