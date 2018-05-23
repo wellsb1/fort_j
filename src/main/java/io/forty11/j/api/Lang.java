@@ -16,8 +16,8 @@
 package io.forty11.j.api;
 
 import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -25,13 +25,13 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
 import io.forty11.j.it.It;
-import io.forty11.j.utils.ISO8601Util;
 
 public class Lang
 {
@@ -39,29 +39,30 @@ public class Lang
 
    protected static final String[] EMPTY_STRING_ARRAY = new String[0];
 
-   @ApiMethod
-   @Comment(value = "Checks for null or obj.toString().length() == 0.  Returns true if all are empty")
-   public static boolean empty(Object... arr)
-   {
-      boolean empty = true;
-      for (int i = 0; empty && arr != null && i < arr.length; i++)
-      {
-         Object obj = arr[i];
-         if (obj != null && obj.toString().length() > 0)
-            empty = false;
-      }
-      return empty;
-   }
-
-   @ApiMethod
-   @Comment(value = "Less typing to call System.currentTimeMillis()")
    public static long time()
    {
       return System.currentTimeMillis();
    }
 
    @ApiMethod
-   @Comment(value = "Forgiving equality checker.  Test for strict == equaltiy, then .equals() equality, then .toString().equals() equality.  Either param can be null.")
+   public static boolean empty(Object obj)
+   {
+      if (obj == null)
+         return true;
+
+      if (obj.toString().length() == 0)
+         return true;
+
+      return false;
+   }
+
+   /**
+    * Tests for ==,equals() or toString().equals()
+    * @param obj1
+    * @param obj2
+    * @return
+    */
+   @ApiMethod
    public static boolean equal(Object obj1, Object obj2)
    {
       if (obj1 == obj2)
@@ -74,37 +75,33 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Faster way to call Integer.parseInt(str.trim()).  Null returned as -1")
    public static int atoi(String str)
    {
       if (str == null)
-         return -1;
+         return 0;
       str = str.trim();
       return Integer.parseInt(str);
    }
 
    @ApiMethod
-   @Comment(value = "Faster way to call Long.parseLong(str.trim()).  Null returned as -1")
    public static long atol(String str)
    {
       if (str == null)
-         return -1;
+         return 0;
       str = str.trim();
       return Long.parseLong(str);
    }
 
    @ApiMethod
-   @Comment(value = "Faster way to call Float.parseFloat(str.trim()).  Null returned as -1")
    public static float atof(String str)
    {
       if (str == null)
-         return -1;
+         return 0;
       str = str.trim();
       return Float.parseFloat(str);
    }
 
    @ApiMethod
-   @Comment(value = "Faster way to call Double.parseDouble(str.trim()).  Null returned as -1")
    public static double atod(String str)
    {
       if (str == null)
@@ -130,7 +127,6 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Faster way to apply a SimpleDateForamt without having to worry about Exceptions")
    public static Date date(String date, String format)
    {
       try
@@ -147,7 +143,6 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Attempts an ISO8601 data parse whic is yyyy-MM-dd|yyyyMMdd][T(hh:mm[:ss[.sss]]|hhmm[ss[.sss]])]?[Z|[+-]hh[:]mm], then yyyy-MM-dd, then MM/dd/yy, then MM/dd/yyyy, then yyyyMMdd ")
    public static Date date(String date)
    {
       try
@@ -204,8 +199,11 @@ public class Lang
       throw new RuntimeException("unsupported format: " + date);
    }
 
+   
+   
+   
+   
    @ApiMethod
-   @Comment(value = "Tries to \"unwrap\" nested exceptions looking for the root cause")
    public static Throwable getCause(Throwable t)
    {
       Throwable origional = t;
@@ -214,6 +212,13 @@ public class Lang
       while (t != null && t.getCause() != null && t.getCause() != t && guard < 100)
       {
          t = t.getCause();
+
+         //--known special cases
+         //         if (t instanceof SAXParseException)
+         //         {
+         //            t = ((SAXParseException) t).getException();
+         //         }
+
          guard++;
       }
 
@@ -258,23 +263,17 @@ public class Lang
    }
 
    @ApiMethod
-   public static void error(String message)
+   public static void rethrow(Throwable ex)
    {
-      throw new RuntimeException(message);
+      rethrow(null, ex);
    }
 
    @ApiMethod
-   public static void rethrow(Throwable e)
+   public static void rethrow(String message, Throwable ex)
    {
-      rethrow(null, e);
-   }
+      Throwable cause = ex;
 
-   @ApiMethod
-   public static void rethrow(String message, Throwable e)
-   {
-      Throwable cause = e;
-
-      while (cause.getCause() != null && cause.getCause() != e)
+      while (cause.getCause() != null && cause.getCause() != ex)
          cause = cause.getCause();
 
       if (cause instanceof RuntimeException)
@@ -282,16 +281,16 @@ public class Lang
          throw (RuntimeException) cause;
       }
 
-      if (e instanceof RuntimeException)
-         throw (RuntimeException) e;
+      if (ex instanceof RuntimeException)
+         throw (RuntimeException) ex;
 
       if (!empty(message))
       {
-         throw new RuntimeException(message, e);
+         throw new RuntimeException(message, ex);
       }
       else
       {
-         throw new RuntimeException(e);
+         throw new RuntimeException(ex);
       }
    }
 
@@ -413,74 +412,6 @@ public class Lang
 
    }
 
-   /** Get the class from a line on the stack trace line. */
-   @ApiMethod
-   public static String getMethodNameFromStackLine(String line)
-   {
-      if (line != null)
-      {
-         line = line.trim();
-         int pos = line.indexOf("at ");
-         if (pos == 0)
-         {
-            line = line.substring(3);
-            pos = line.indexOf('(');
-            if (pos < 0)
-            {
-               pos = line.indexOf(' ');
-            }
-            if (pos > 0)
-            {
-               String clsStr = line.substring(0, pos);
-               clsStr = clsStr.trim();
-
-               pos = clsStr.lastIndexOf('.');
-               String methodName = clsStr.substring(pos + 1);
-
-               return methodName;
-            }
-         }
-      }
-
-      return null;
-   }
-
-   @ApiMethod
-   public static Class getClassFromStackLine(String line)
-   {
-      if (line != null)
-      {
-         line = line.trim();
-         int pos = line.indexOf("at ");
-         if (pos == 0)
-         {
-            line = line.substring(3);
-            pos = line.indexOf('(');
-            if (pos < 0)
-            {
-               pos = line.indexOf(' ');
-            }
-            if (pos > 0)
-            {
-               String clsStr = line.substring(0, pos);
-               clsStr = clsStr.trim();
-
-               pos = clsStr.lastIndexOf('.');
-               clsStr = clsStr.substring(0, pos);
-
-               try
-               {
-                  return Class.forName(clsStr);
-               }
-               catch (ClassNotFoundException e)
-               {
-               }
-            }
-         }
-      }
-      return null;
-   }
-
    static String clean(String stackTrace)
    {
       String[] ignoredCauses = new String[]{//
@@ -535,21 +466,19 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment("Easy way to call Thread.sleep(long) without worrying about try/catch for InterruptedException")
    public static void sleep(long millis)
    {
       try
       {
          Thread.sleep(millis);
       }
-      catch (InterruptedException e)
+      catch (Exception ex)
       {
-         rethrow(e);
+         rethrow(ex);
       }
    }
 
    @ApiMethod
-   @Comment(value = "Same as calling Class.getMethod but it returns null intead of throwing a NoSuchMethodException")
    public static Method getMethod(Class clazz, String name, Class... args)
    {
       try
@@ -564,8 +493,6 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Searches the inheritance heirarchy for a field with the the given name and makes sure it is settable via Field.setAccesible")
-
    public static Field getField(String fieldName, Class clazz)
    {
       if (fieldName == null || clazz == null)
@@ -593,7 +520,6 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Gets all the fields from from all classes in the inheritance heirarchy EXCEPT for any class who's packages starts with \"java\"")
    public static List<Field> getFields(Class clazz)
    {
       List<Field> fields = new ArrayList();
@@ -620,57 +546,29 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Finds the Field in the inheritance heirarchy and sets it")
-   public static void setField(String name, Object value, Object o) throws NoSuchFieldException, IllegalAccessException
-   {
-      Field f = getField(name, o.getClass());
-      f.setAccessible(true);
-      f.set(o, value);
-   }
-
-   @ApiMethod
-   @Comment(value = "Searches the inheritance heirarchy for the first method of the given name (ignores case).  No distinction is made for overloaded method names.")
    public static Method getMethod(Class clazz, String name)
    {
-      do
+      for (Method m : clazz.getMethods())
       {
-         for (Method m : clazz.getMethods())
-         {
-            if (m.getName().equalsIgnoreCase(name))
-               return m;
-         }
-
-         if (clazz != null)
-         {
-            clazz = clazz.getSuperclass();
-         }
+         if (m.getName().equalsIgnoreCase(name))
+            return m;
       }
-      while (clazz != null && !Object.class.equals(clazz));
-
       return null;
    }
 
    @ApiMethod
-   @Comment(value = "Returns all methods in the inheritance heirarchy with the given name")
    public static List<Method> getMethods(Class clazz, String name)
    {
       List<Method> methods = new ArrayList();
-
-      do
+      for (Method m : clazz.getMethods())
       {
-         for (Method m : clazz.getMethods())
-         {
-            if (m.getName().equalsIgnoreCase(name))
-               methods.add(m);
-         }
+         if (m.getName().equalsIgnoreCase(name))
+            methods.add(m);
       }
-      while (clazz != null && !Object.class.equals(clazz));
-
       return methods;
    }
 
    @ApiMethod
-   @Comment(value = "Tries to find a bean property getter then defaults to returning the Field value")
    public static Object getProperty(String name, Object object)
    {
       try
@@ -682,9 +580,37 @@ public class Lang
          }
          else
          {
-            Field field = getField(name, object.getClass());
-            if (field != null)
-               return field.get(object);
+            Class clazz = object.getClass();
+            while (clazz != null)
+            {
+               //               Field[] fields = clazz.getDeclaredField(name)Fields();
+               //               for(int i=0; fields != null && i < fields.length; i++)
+               //               {
+               //                  if(fields[i].getName().equalsIgnoreCase(name))
+               //                  {
+               //                     fields[i].setAccessible(true);
+               //                     return fields[i].get(object);
+               //                  }
+               //               }
+
+               try
+               {
+                  Field field = clazz.getDeclaredField(name);
+                  if (field != null)
+                  {
+                     field.setAccessible(true);
+                     return field.get(object);
+                  }
+               }
+               catch (NoSuchFieldException ex)
+               {
+               }
+
+               if (clazz.equals(Object.class))
+                  break;
+
+               clazz = clazz.getSuperclass();
+            }
          }
       }
       catch (Exception ex)
@@ -695,20 +621,27 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Tries to find a bean property getter then tries Field value, then defaults to the supplied defaultVal")
-   public static Object getProperty(String name, Object object, Object defaultVal)
+   public static Object getProperty(String name, Object object, Object defaultValue)
    {
       Object value = getProperty(name, object);
       if (Lang.empty(value))
       {
-         value = defaultVal;
+         value = defaultValue;
       }
 
       return value;
    }
 
+   /**
+    * A best effort field by field shallow copier that will ignore all errors.
+    * This is not a recursive copyier.  
+    * 
+    * The src and the dest object do not have to be the same class.  
+    * 
+    * @param src
+    * @param dest
+    */
    @ApiMethod
-   @Comment(value = "A best effort field by field shallow copier that will ignore all errors. This does not recurse.")
    public static void copyFields(Object src, Object dest)
    {
       List<Field> fields = getFields(src.getClass());
@@ -726,7 +659,14 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Utility to call an close() method on supplied objects and completely ignore any errors")
+   public static void setField(String name, Object value, Object o) throws NoSuchFieldException, IllegalAccessException
+   {
+      Field f = getField(name, o.getClass());
+      f.setAccessible(true);
+      f.set(o, value);
+   }
+
+   @ApiMethod
    public static void close(Object... toClose)
    {
       for (Object o : toClose)
@@ -735,32 +675,25 @@ public class Lang
          {
             try
             {
-               if (o instanceof Closeable)
+               Method m = o.getClass().getMethod("close");
+               if (m != null)
                {
-                  ((Closeable) o).close();
-               }
-               else
-               {
-                  Method m = o.getClass().getMethod("close");
-                  if (m != null)
-                  {
-                     m.invoke(o);
-                  }
+                  m.invoke(o);
                }
             }
             catch (NoSuchMethodException nsme)
             {
-               //nsme.printStackTrace();
+               nsme.printStackTrace();
             }
             catch (Exception ex)
             {
-               //ex.printStackTrace();
+               ex.printStackTrace();
             }
          }
       }
    }
 
-   /*
+   /* 
    +------------------------------------------------------------------------------+
    | Collection Converstion
    +------------------------------------------------------------------------------+
@@ -773,14 +706,12 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Convenience to turn an Iterable into a list")
    public static List asList(Iterable it)
    {
       return asList(it.iterator());
    }
 
    @ApiMethod
-   @Comment(value = "Convenience to turn an Iterator into a list")
    public static List asList(Iterator it)
    {
       List list = new ArrayList();
@@ -792,15 +723,52 @@ public class Lang
    }
 
    @ApiMethod
-   @Comment(value = "Creats a list from varargs")
    public static List asList(Object... array)
    {
+      if (array != null && array.length == 1 && array[0] instanceof List)
+         return (List) array[0];
+
       List list = new ArrayList();
       for (int i = 0; array != null && i < array.length; i++)
       {
          list.add(array[i]);
       }
       return list;
+   }
+
+   @ApiMethod
+   public static Object[] asArray(Iterable it)
+   {
+      return asArray(asList(it));
+   }
+
+   //   @JjMethod
+   //   public static Object[] asArray(Iterator it)
+   //   {
+   //      return asArray(asList(it));
+   //   }
+
+   @ApiMethod
+   public static Object[] asArray(Collection c)
+   {
+      ArrayList al = new ArrayList(c);
+      if (al.size() == 0)
+      {
+         return new Object[0];
+      }
+      else
+      {
+         try
+         {
+            Class clazz = al.get(0).getClass();
+            Object[] arr = (Object[]) Array.newInstance(clazz, al.size());
+            return al.toArray(arr);
+         }
+         catch (Exception ex)
+         {
+            return al.toArray();
+         }
+      }
    }
 
 }

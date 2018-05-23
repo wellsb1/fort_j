@@ -13,23 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.forty11.j.it;
+package io.forty11.j.api;
 
-import java.util.Enumeration;
-
-public class EnumIt<E> extends It<E>
+/**
+ * 
+ * @author Wells Burke
+ *
+ */
+public class Log
 {
-   Enumeration enumer = null;
-
-   public EnumIt(Enumeration enumer)
+   @ApiMethod
+   public static void log(Object... args)
    {
-      this.enumer = enumer;
-   }
-
-   protected E findNext()
-   {
-      if(enumer.hasMoreElements())
-         return (E)enumer.nextElement();
-      return null;
+      for (Object o : args)
+      {
+         System.out.print(o + " ");
+      }
+      System.out.print("\r\n");
    }
 }

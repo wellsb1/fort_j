@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,9 +18,9 @@ package io.forty11.j.it;
 import java.util.Iterator;
 
 /**
- * Utility base class to make it easier to program simple typed
- * iterator/iterables.
- *
+ * Utility base class to make it easier to program simple typed 
+ * iterator/iterables. 
+ *  
  * @author Wells Burke
  */
 public abstract class It<E> implements Iterator<E>, Iterable<E>

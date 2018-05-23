@@ -22,8 +22,7 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -31,54 +30,9 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
-import io.forty11.j.J;
-
 public class Strings
 {
-
    @ApiMethod
-   @Comment(value = "Concatenates pieces[0] + glue + pieces[n]...")
-   public static String implode(String glue, Object... pieces)
-   {
-      if (pieces != null && pieces.length == 1 && pieces[0] instanceof Collection)
-         pieces = ((Collection) pieces[0]).toArray();
-
-      StringBuffer str = new StringBuffer("");
-      for (int i = 0; pieces != null && i < pieces.length; i++)
-      {
-         str.append(pieces[i]);
-         if (i < pieces.length - 1)
-            str.append(glue);
-      }
-      return str.toString();
-   }
-
-   @ApiMethod
-   @Comment(value = "Same as String.split() but performes a trim() on each piece and returns an list instead of an array")
-   public static List<String> explode(String delim, String... pieces)
-   {
-      List exploded = new ArrayList();
-      for (int i = 0; pieces != null && i < pieces.length; i++)
-      {
-         if (J.empty(pieces[i]))
-            continue;
-
-         String[] parts = pieces[i].split(delim);
-         for (int j = 0; j < parts.length; j++)
-         {
-            String part = parts[j].trim();
-            if (!J.empty(part))
-            {
-               exploded.add(part);
-            }
-         }
-      }
-
-      return exploded;
-   }
-
-   @ApiMethod
-   @Comment(value = "Shortcut for string.indexOf(target) >= 0 that checks for nulls")
    public static boolean contains(String string, String target)
    {
       if (string == null || target == null)
@@ -87,8 +41,31 @@ public class Strings
          return string.indexOf(target) >= 0;
    }
 
+   //   @ApiMethod
+   //   public static String implode(String glue, Object... pieces)
+   //   {
+   //      StringBuffer str = new StringBuffer("");
+   //      for (int i = 0; pieces != null && i < pieces.length; i++)
+   //      {
+   //         str.append(pieces[i]);
+   //         if (i < pieces.length - 1)
+   //            str.append(glue);
+   //      }
+   //      return str.toString();
+   //   }
+
    @ApiMethod
-   @Comment(value = "Upper case the first letter of the string")
+   public static List<String> explode(String str, String delim)
+   {
+      String[] parts = str.split(delim);
+      for (int i = 0; i < parts.length; i++)
+      {
+         parts[i] = parts[i].trim();
+      }
+      return Arrays.asList(parts);
+   }
+
+   @ApiMethod
    public static String startUpper(String str)
    {
       if (!Lang.empty(str))
@@ -99,7 +76,6 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Lower case the first letter of the string")
    public static String startLower(String str)
    {
       if (!Lang.empty(str))
@@ -110,7 +86,6 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Tries to make a pretty title case string with spaces out of a camel case style string")
    public static String fromCamelCase(String string)
    {
       //convert camel case style
@@ -157,7 +132,6 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Returns a lower cased string replacing \"[^a-z0-9]+\" with \"-\"")
    public static String slugify(String str)
    {
       if (str == null)
@@ -181,21 +155,18 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Hash the bytes with SHA-1")
    public static String sha1(byte[] bytes)
    {
       return hash(bytes, "SHA-1");
    }
 
    @ApiMethod
-   @Comment(value = "Hash the bytes with MD5")
    public static String md5(byte[] bytes)
    {
       return hash(bytes, "MD5");
    }
 
    @ApiMethod
-   @Comment(value = "Hash the bytes with the given algorithm")
    public static String hash(byte[] byteArr, String algorithm)
    {
       try
@@ -218,14 +189,13 @@ public class Strings
    /**
     * Instance of <code>${key}</code> in <code>str</code> will be replaced
     * with <code>value</code> .
-    *
+    * 
     * Variables must be wapped in ${}
     * @param str
     * @param values
     * @return
     */
    @ApiMethod
-   @Comment(value = "Replaces ${key} style text literals in str with values from the map")
    public static String replaceAll(String str, Map<String, Object> values)
    {
       StringBuffer buff = new StringBuffer("");
@@ -243,7 +213,6 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Prepends spaces to the begining of each line")
    public static String indent(String str, int indent)
    {
       try
@@ -266,7 +235,6 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Performans a word wrap limiting each line to the specified number of characters")
    public static String wrap(String str, int wrap)
    {
       StringBuffer buff = new StringBuffer();
@@ -291,7 +259,6 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Limits line to <code>length</code> characters inclusive of \"...\" trailing characters indicating the string was in fact choppped")
    public static String chop(String str, int length)
    {
       if (str.length() > length)
@@ -303,7 +270,6 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Appends spaces until the string is at least <code>length</code> characters long")
    public static String pad(String str, int length)
    {
       if (str.length() > length)
@@ -326,41 +292,39 @@ public class Strings
       return string;
    }
 
-   //   @ApiMethod
-   //   public static String replace(String string, String[][] replacements)
-   //   {
-   //      boolean changed = false;
-   //      int limiter = 0;
-   //      do
-   //      {
-   //         changed = false;
-   //         limiter++;
-   //
-   //         for (int i = 0; i < replacements.length; i++)
-   //         {
-   //            if (string.indexOf(replacements[i][0]) >= 0)
-   //            {
-   //               string = string.replace(replacements[i][0], replacements[i][1]);
-   //               changed = true;
-   //               break;
-   //            }
-   //         }
-   //
-   //      }
-   //      while (changed && limiter < 100);
-   //
-   //      return string;
-   //   }
+   @ApiMethod
+   public static String replace(String string, String[][] replacements)
+   {
+      boolean changed = false;
+      int limiter = 0;
+      do
+      {
+         changed = false;
+         limiter++;
+
+         for (int i = 0; i < replacements.length; i++)
+         {
+            if (string.indexOf(replacements[i][0]) >= 0)
+            {
+               string = string.replace(replacements[i][0], replacements[i][1]);
+               changed = true;
+               break;
+            }
+         }
+
+      }
+      while (changed && limiter < 100);
+
+      return string;
+   }
 
    @ApiMethod
-   @Comment(value = "Returns true if the string contains a * or a ?")
    public static boolean isWildcard(String str)
    {
       return str.indexOf('*') >= 0 || str.indexOf('?') >= 0;
    }
 
    @ApiMethod
-   @Comment(value = "Pattern matches the string using ? to indicate any one single value and * to indicate any 0-n multiple values")
    public static boolean wildcardMatch(String wildcard, String string)
    {
       if (Lang.empty(wildcard) || Lang.empty(string))
@@ -373,7 +337,6 @@ public class Strings
    }
 
    @ApiMethod
-   @Comment(value = "Performs string.matches() but also checks for null")
    public static boolean regexMatch(String regex, String string)
    {
       if (Lang.empty(regex) || Lang.empty(string))
@@ -388,7 +351,6 @@ public class Strings
     * @return
     */
    @ApiMethod
-   @Comment(value = "Converts a * and ? wildcard style patterns into regex style pattern")
    public static String wildcardToRegex(String wildcard)
    {
       wildcard = wildcard.replace("**", "*");
@@ -430,46 +392,46 @@ public class Strings
    }
 
    /**
-   * Convenience methods for escaping special characters related to HTML, XML,
+   * Convenience methods for escaping special characters related to HTML, XML, 
    * and regular expressions.
-   *
-   * <P>To keep you safe by default, WEB4J goes to some effort to escape
+   * 
+   * <P>To keep you safe by default, WEB4J goes to some effort to escape 
    * characters in your data when appropriate, such that you <em>usually</em>
    * don't need to think too much about escaping special characters. Thus, you
-   *  shouldn't need to <em>directly</em> use the services of this class very often.
-   *
-   * <P><span class='highlight'>For Model Objects containing free form user input,
+   *  shouldn't need to <em>directly</em> use the services of this class very often. 
+   * 
+   * <P><span class='highlight'>For Model Objects containing free form user input, 
    * it is highly recommended that you use {@link SafeText}, not <tt>String</tt></span>.
    * Free form user input is open to malicious use, such as
    * <a href='http://www.owasp.org/index.php/Cross_Site_Scripting'>Cross Site Scripting</a>
-   * attacks.
-   * Using <tt>SafeText</tt> will protect you from such attacks, by always escaping
-   * special characters automatically in its <tt>toString()</tt> method.
-   *
-   * <P>The following WEB4J classes will automatically escape special characters
-   * for you, when needed :
+   * attacks. 
+   * Using <tt>SafeText</tt> will protect you from such attacks, by always escaping 
+   * special characters automatically in its <tt>toString()</tt> method.   
+   * 
+   * <P>The following WEB4J classes will automatically escape special characters 
+   * for you, when needed : 
    * <ul>
-   * <li>the {@link SafeText} class, used as a building block class for your
+   * <li>the {@link SafeText} class, used as a building block class for your 
    * application's Model Objects, for modeling all free form user input
    * <li>the {@link Populate} tag used with forms
    * <li>the {@link Report} class used for creating quick reports
-   * <li>the {@link Text}, {@link TextFlow}, and {@link Tooltips} custom tags used
+   * <li>the {@link Text}, {@link TextFlow}, and {@link Tooltips} custom tags used 
    * for translation
-   * </ul>
-   *
+   * </ul> 
+   * 
    * @see http://www.javapractices.com/topic/TopicAction.do?Id=96
    */
 
    /**
     * Escape characters for text appearing in HTML markup.
-    *
+    * 
     * <P>This method exists as a defence against Cross Site Scripting (XSS) hacks.
     * This method escapes all characters recommended by the Open Web App
-    * Security Project -
-    * <a href='http://www.owasp.org/index.php/Cross_Site_Scripting'>link</a>.
-    *
-    * <P>The following characters are replaced with corresponding HTML
-    * character entities :
+    * Security Project - 
+    * <a href='http://www.owasp.org/index.php/Cross_Site_Scripting'>link</a>.  
+    * 
+    * <P>The following characters are replaced with corresponding HTML 
+    * character entities : 
     * <table border='1' cellpadding='3' cellspacing='0'>
     * <tr><th> Character </th><th> Encoding </th></tr>
     * <tr><td> < </td><td> &lt; </td></tr>
@@ -477,7 +439,7 @@ public class Strings
     * <tr><td> & </td><td> &amp; </td></tr>
     * <tr><td> " </td><td> &quot;</td></tr>
     * <tr><td> ' </td><td> &#039;</td></tr>
-    * <tr><td> ( </td><td> &#040;</td></tr>
+    * <tr><td> ( </td><td> &#040;</td></tr> 
     * <tr><td> ) </td><td> &#041;</td></tr>
     * <tr><td> # </td><td> &#035;</td></tr>
     * <tr><td> % </td><td> &#037;</td></tr>
@@ -485,12 +447,11 @@ public class Strings
     * <tr><td> + </td><td> &#043; </td></tr>
     * <tr><td> - </td><td> &#045; </td></tr>
     * </table>
-    *
-    * <P>Note that JSTL's {@code <c:out>} escapes <em>only the first
+    * 
+    * <P>Note that JSTL's {@code <c:out>} escapes <em>only the first 
     * five</em> of the above characters.
     */
    @ApiMethod
-   @Comment(value = "Escape HTML special characters so this string can be displayed as text not marketup in an HTML document")
    public static String forHTML(String aText)
    {
       final StringBuilder result = new StringBuilder();
@@ -565,11 +526,10 @@ public class Strings
     *
     * <P>It is important to note that if a query string appears in an <tt>HREF</tt>
     * attribute, then there are two issues - ensuring the query string is valid HTTP
-    * (it is URL-encoded), and ensuring it is valid HTML (ensuring the
+    * (it is URL-encoded), and ensuring it is valid HTML (ensuring the 
     * ampersand is escaped).
     */
    @ApiMethod
-   @Comment(value = "Does URLEncoder.encode() but throws a RuntimeException instead of an UnsupportedEncodingException")
    public static String forURL(String aURLFragment)
    {
       String result = null;
@@ -586,8 +546,8 @@ public class Strings
 
    /**
    * Escape characters for text appearing as XML data, between tags.
-   *
-   * <P>The following characters are replaced with corresponding character entities :
+   * 
+   * <P>The following characters are replaced with corresponding character entities : 
    * <table border='1' cellpadding='3' cellspacing='0'>
    * <tr><th> Character </th><th> Encoding </th></tr>
    * <tr><td> < </td><td> &lt; </td></tr>
@@ -596,13 +556,12 @@ public class Strings
    * <tr><td> " </td><td> &quot;</td></tr>
    * <tr><td> ' </td><td> &#039;</td></tr>
    * </table>
-   *
-   * <P>Note that JSTL's {@code <c:out>} escapes the exact same set of
+   * 
+   * <P>Note that JSTL's {@code <c:out>} escapes the exact same set of 
    * characters as this method. <span class='highlight'>That is, {@code <c:out>}
    *  is good for escaping to produce valid XML, but not for producing safe HTML.</span>
    */
    @ApiMethod
-   @Comment(value = "Escape xml tag characters so that this can be rendered as text instead of markup when included in a xml/html document")
    public static String forXML(String aText)
    {
       final StringBuilder result = new StringBuilder();
@@ -646,11 +605,10 @@ public class Strings
    * replaced by their escaped equivalents.
    */
    @ApiMethod
-   @Comment(value = "Return text with all '<' and '>' characters replaced by their escaped equivalents.")
-   public static String toDisableTags(String text)
+   public static String toDisableTags(String aText)
    {
       final StringBuilder result = new StringBuilder();
-      final StringCharacterIterator iterator = new StringCharacterIterator(text);
+      final StringCharacterIterator iterator = new StringCharacterIterator(aText);
       char character = iterator.current();
       while (character != CharacterIterator.DONE)
       {
@@ -692,7 +650,6 @@ public class Strings
    *
    */
    @ApiMethod
-   @Comment(value = "Escapes any regex specicial characters")
    public static String forRegex(String aRegexFragment)
    {
       final StringBuilder result = new StringBuilder();
@@ -775,6 +732,22 @@ public class Strings
       return result.toString();
    }
 
+   /**
+   * Disable all <tt><SCRIPT></tt> tags in <tt>aText</tt>.
+   * 
+   * <P>Insensitive to case.
+   */
+   @ApiMethod
+   public static String forScriptTagsOnly(String aText)
+   {
+      String result = null;
+      Matcher matcher = SCRIPT.matcher(aText);
+      result = matcher.replaceAll("&lt;SCRIPT>");
+      matcher = SCRIPT_END.matcher(result);
+      result = matcher.replaceAll("&lt;/SCRIPT>");
+      return result;
+   }
+
    @ApiMethod
    public static String substring(String string, String regex, int group)
    {
@@ -786,4 +759,84 @@ public class Strings
       return null;
    }
 
+   private static final Pattern SCRIPT     = Pattern.compile("<SCRIPT>", Pattern.CASE_INSENSITIVE);
+   private static final Pattern SCRIPT_END = Pattern.compile("</SCRIPT>", Pattern.CASE_INSENSITIVE);
+
+   /**
+    * Parses the specified command line into an array of individual arguments.
+    * Arguments containing spaces should be enclosed in quotes.
+    * Quotes that should be in the argument string should be escaped with a
+    * preceding backslash ('\') character.  Backslash characters that should
+    * be in the argument string should also be escaped with a preceding
+    * backslash character.
+    * @param args the command line to parse
+    * @return an argument array representing the specified command line.
+    */
+   @ApiMethod
+   public static String[] parseArgs(String args)
+   {
+      List resultBuffer = new java.util.ArrayList();
+
+      if (args != null)
+      {
+         args = args.trim();
+         int z = args.length();
+         boolean insideQuotes = false;
+         StringBuffer buf = new StringBuffer();
+
+         for (int i = 0; i < z; ++i)
+         {
+            char c = args.charAt(i);
+            if (c == '"')
+            {
+               appendToBuffer(resultBuffer, buf);
+               insideQuotes = !insideQuotes;
+            }
+            else if (c == '\\')
+            {
+               if ((z > i + 1) && ((args.charAt(i + 1) == '"') || (args.charAt(i + 1) == '\\')))
+               {
+                  buf.append(args.charAt(i + 1));
+                  ++i;
+               }
+               else
+               {
+                  buf.append("\\");
+               }
+            }
+            else
+            {
+               if (insideQuotes)
+               {
+                  buf.append(c);
+               }
+               else
+               {
+                  if (Character.isWhitespace(c))
+                  {
+                     appendToBuffer(resultBuffer, buf);
+                  }
+                  else
+                  {
+                     buf.append(c);
+                  }
+               }
+            }
+         }
+         appendToBuffer(resultBuffer, buf);
+
+      }
+
+      String[] result = new String[resultBuffer.size()];
+      return ((String[]) resultBuffer.toArray(result));
+   }
+
+   private static void appendToBuffer(List resultBuffer, StringBuffer buf)
+   {
+      if (buf.length() > 0)
+      {
+         resultBuffer.add(buf.toString());
+         buf.setLength(0);
+      }
+   }
 }

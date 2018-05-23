@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -57,7 +57,6 @@ public class Paths
    //   }
 
    @ApiMethod
-   @Comment(value = "Attempts to normalize a file path reference removing redundant wild cards and normalizing to \"/\" as the separator")
    public static String path(String path)
    {
       if (path == null)
@@ -97,7 +96,6 @@ public class Paths
    }
 
    @ApiMethod
-   @Comment(value = "Returns a path string for file makeing sure that the string ends with a / if the file is a directory")
    public static String path(File file)
    {
       try
@@ -134,7 +132,7 @@ public class Paths
          File file = Files.file(url.toString());
          return new PathIt(new FileIt(file));
       }
-
+      
       return new PathIt(new CollectionIt(Collections.EMPTY_LIST));
    }
 
@@ -174,10 +172,10 @@ public class Paths
       String[] chunks = path(path).split("/");
       if(chunks != null && chunks.length > index)
          chunk = chunks[index];
-
+      
       return chunk;
    }
-
+   
    @ApiMethod
    public static String[] chunks(String path)
    {
@@ -185,7 +183,7 @@ public class Paths
 
       List<String> chunks = new ArrayList();
 
-      //treat the leading '/' as if were its own
+      //treat the leading '/' as if were its own 
       //directory name not simply a path separator
       if (path.charAt(0) == '/')
       {

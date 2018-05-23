@@ -91,24 +91,6 @@ public class Files
       return buff.toString();
    }
 
-   @ApiMethod
-   public static String getFilePath(String fileName)
-   {
-      fileName = URLDecoder.decode(fileName);
-      fileName = fileName.replace('\\', '/');
-
-      if (fileName.endsWith("/"))
-         return fileName;
-
-      if (fileName.lastIndexOf("/") > 0)
-      {
-         fileName = fileName.substring(0, fileName.lastIndexOf("/"));
-      }
-
-      return fileName;
-   }
-
-   @ApiMethod
    public static String getFileName(String fullName)
    {
       fullName = fullName.replace('\\', '/');
@@ -124,7 +106,6 @@ public class Files
       return fileName;
    }
 
-   @ApiMethod
    public static String getFileExtension(String fileName)
    {
       fileName = getFileName(fileName);
@@ -139,17 +120,6 @@ public class Files
       return null;
    }
 
-   @ApiMethod
-   public static String getFileBaseName(String fileName)
-   {
-      fileName = getFileName(fileName);
-      if (fileName.lastIndexOf(".") > 0)
-         fileName = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
-
-      return fileName;
-   }
-
-   @ApiMethod
    public static String encodeFileName(String path)
    {
       path = normalizePath(path);
@@ -266,6 +236,12 @@ public class Files
       return !abspath.equals(cnnpath);
    }
 
+   //   @ApiMethod
+   //   public static String read(String file) throws Exception
+   //   {
+   //      return read(new File(file));
+   //   }
+
    @ApiMethod
    public static String read(File file) throws Exception
    {
@@ -290,7 +266,7 @@ public class Files
    @ApiMethod
    public static void write(String file, String text) throws Exception
    {
-      if (text == null)
+      if(text == null)
          return;
       write(new File(file), text);
    }

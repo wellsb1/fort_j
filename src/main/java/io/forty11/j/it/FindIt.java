@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,20 +31,20 @@ import io.forty11.j.api.Paths;
 import io.forty11.j.api.Strings;
 
 /**
- * TODO: matching with ** performs extra matches.  As an optimization,
+ * TODO: matching with ** performs extra matches.  As an optimization, 
  * add a shortcircuit * match against the ramaining chunk regex once ** is hit
- *
+ * 
  * TODO: cache the compiled regex Pattern objects
- *
- * TODO: allow passing an optional base file to be used instead of the
+ * 
+ * TODO: allow passing an optional base file to be used instead of the 
  * working dir for relative matches
- *
+ * 
  * TODO: add support for programmer directed search pruning based on Iterator.remove()
- *
+ * 
  * TODO: supercede class Ls
  */
 /**
- * Supports file searching based on path.separator (or comma) separated
+ * Supports file searching based on path.separator (or comma) separated  
  * list of patterns with simple wildcards.  Patterns that end in a '/'
  * will only return directories.  Patterns not ending in a '/' will only
  * return files.
@@ -55,16 +55,16 @@ import io.forty11.j.api.Strings;
  * '*'  any zero or more characters in a file or directory name
  * '**' any number of directories
  * '?'  any one character
- *
+ * 
  * ex: find(*.xml,*.java:**&#47;*.css)
  * ex: find(../base/*&#47;classes/*.class)
  * ex: find(../base/**&#47;classes/*.class)
  * ex: find(../base/**&#47;etc/"star"/lib/*.jar)
  * </pre>
- *
- * @param pattern - a path.separator (or comma) seperated list
+ * 
+ * @param pattern - a path.separator (or comma) seperated list 
  *                   of expressions optionally containing wildcards
- *
+ * 
  * @return an iteraotr of <code>File</code> objects whose paths match
  *          one or more of the <code>pattern</code> expressions
  */
@@ -275,7 +275,7 @@ public class FindIt extends It<File>
       }
    }
 
-   /*
+   /* 
    +------------------------------------------------------------------------------+
    | Accessors
    +------------------------------------------------------------------------------+

@@ -33,13 +33,89 @@ import java.net.URLDecoder;
 
 public class Streams
 {
-   public static final int  KB  = 1048;
-   public static final int  MB  = 1048576;
-   public static final long GB  = 1073741824;
-   public static final int  K64 = 65536;
+   public static final int            KB  = 1048;
+   public static final int            MB  = 1048576;
+   public static final long           GB  = 1073741824;
+   public static final int            K64 = 65536;
+
+   public static final BufferedReader in  = new BufferedReader(new InputStreamReader(System.in), MB);
+
+   //TODO add support for character encodings
+   public static final BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out), MB);
+
+   static
+   {
+      //adds an extra return after the program ends to make sure
+      //that the prompt is back at the left of the screen
+      Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
+         {
+            @Override
+            public void run()
+            {
+               try
+               {
+                  Streams.flush(out);
+               }
+               catch (Exception ex)
+               {
+                  ex.printStackTrace();
+               }
+            }
+         }));
+   }
 
    @ApiMethod
-   @Comment(value = "Writes each object to System.err with a space between")
+   public static String read(InputStream in) throws Exception
+   {
+      ByteArrayOutputStream out = new ByteArrayOutputStream();
+      pipe(in, out);
+      return new String(out.toByteArray());
+   }
+
+   public static String readLine(InputStream in) throws Exception
+   {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+      return reader.readLine();
+   }
+
+   @ApiMethod
+   public static String in() throws Exception
+   {
+      return in.readLine();
+   }
+
+   @ApiMethod
+   public static void out(Object... obj) throws RuntimeException
+   {
+      try
+      {
+         for (Object o : obj)
+         {
+            if (o instanceof InputStream)
+            {
+               BufferedReader reader = new BufferedReader(new InputStreamReader((InputStream) o));
+               String line = null;
+
+               while ((line = reader.readLine()) != null)
+               {
+                  out.write(line);
+                  out.write(System.getProperty("line.separator"));
+               }
+            }
+            else
+            {
+               out.write(o != null ? o.toString() : "null");
+            }
+         }
+         out.write(System.getProperty("line.separator"));
+      }
+      catch (Exception ex)
+      {
+         Lang.rethrow(ex);
+      }
+   }
+
+   @ApiMethod
    public static void err(Object... obj)
    {
       for (Object o : obj)
@@ -50,52 +126,20 @@ public class Streams
    }
 
    @ApiMethod
-   @Comment(value = "Writes each object to System.out with a space between")
-   public static void out(Object... obj)
+   public static void flush(Flushable stream) throws Exception
    {
-      for (Object o : obj)
-      {
-         System.out.print(o);
-      }
-      System.out.println("");
+      if (stream != null)
+         stream.flush();
    }
 
    @ApiMethod
-   @Comment(value = "Read all of the stream to a string and close the stream.  Throws RuntimeException instead of IOException")
-   public static String read(InputStream in)
+   public static void close(Closeable stream) throws Exception
    {
-      try
-      {
-         ByteArrayOutputStream out = new ByteArrayOutputStream();
-         pipe(in, out);
-         return new String(out.toByteArray());
-      }
-      catch (Exception ex)
-      {
-         Lang.rethrow(ex);
-      }
-      return null;
+      if (stream != null)
+         stream.close();
    }
 
    @ApiMethod
-   @Comment(value = "Simply calls stream.flush() but throws RuntimeException instead of IOException")
-   public static void flush(Flushable stream)
-   {
-      try
-      {
-         if (stream != null)
-         {
-            stream.flush();
-         }
-      }
-      catch (Exception ex)
-      {
-         Lang.rethrow(ex);
-      }
-   }
-
-   @ApiMethod
-   @Comment(value = "Copy all data from src to dst and close the streams")
    public static void pipe(InputStream src, OutputStream dest) throws Exception
    {
       try
@@ -108,7 +152,7 @@ public class Streams
          //int total = 0;
          synchronized (src)
          {
-            while ((navailable = isBlocking ? Integer.MAX_VALUE : src.available()) > 0 //
+            while ((navailable = isBlocking ? Integer.MAX_VALUE : src.available()) > 0 // 
                   && (nread = src.read(buf, 0, Math.min(buf.length, navailable))) >= 0)
             {
                dest.write(buf, 0, nread);
@@ -120,13 +164,12 @@ public class Streams
       }
       finally
       {
-         Lang.close(src);
-         Lang.close(dest);
+         close(src);
+         close(dest);
       }
    }
 
    @ApiMethod
-   @Comment(value = "Copy all data from src to dst and close the reader/writer")
    public static void pipe(Reader src, Writer dest) throws Exception
    {
       try
@@ -147,41 +190,40 @@ public class Streams
       finally
       {
          flush(dest);
-         Lang.close(src);
-         Lang.close(dest);
+         close(src);
+         close(dest);
       }
    }
 
    @ApiMethod
-   @Comment(value = "Attempts to locate the stream as a file, url, or classpath resource")
-   public static InputStream findInputStream(String fileOrUrl)
+   public static InputStream findInputStream(String url)
    {
       try
       {
-         if (fileOrUrl.startsWith("file:/"))
+         if (url.startsWith("file:/"))
          {
-            fileOrUrl = URLDecoder.decode(fileOrUrl);
+            url = URLDecoder.decode(url);
          }
-         if (fileOrUrl.startsWith("file:///"))
+         if (url.startsWith("file:///"))
          {
-            fileOrUrl = fileOrUrl.substring(7, fileOrUrl.length());
+            url = url.substring(7, url.length());
          }
-         if (fileOrUrl.startsWith("file:/"))
+         if (url.startsWith("file:/"))
          {
-            fileOrUrl = fileOrUrl.substring(5, fileOrUrl.length());
+            url = url.substring(5, url.length());
          }
 
-         if (fileOrUrl.indexOf(':') >= 0)
+         if (url.indexOf(':') >= 0)
          {
-            return new URL(fileOrUrl).openStream();
+            return new URL(url).openStream();
          }
-         else if (new File(fileOrUrl).exists())
+         else if (new File(url).exists())
          {
-            return new FileInputStream(fileOrUrl);
+            return new FileInputStream(url);
          }
          else
          {
-            return Thread.currentThread().getContextClassLoader().getResourceAsStream(fileOrUrl);
+            return Thread.currentThread().getContextClassLoader().getResourceAsStream(url);
          }
       }
       catch (Exception ex)
@@ -194,94 +236,12 @@ public class Streams
    }
 
    @ApiMethod
-   @Comment(value = "Attempts to locate the stream as a file, url, or classpath resource and then reads it all as a string")
-   public static String read(String fileOrUrl) throws Exception
+   public static String read(String resource) throws Exception
    {
       ByteArrayOutputStream out = new ByteArrayOutputStream();
-      InputStream in = findInputStream(fileOrUrl);
+      InputStream in = findInputStream(resource);
       Streams.pipe(in, out);
       return new String(out.toByteArray());
    }
-
-   //   public static BufferedReader in  = null;
-
-   //   public static BufferedWriter out = null;
-
-   //   static
-   //   {
-   //      //adds an extra return after the program ends to make sure
-   //      //that the prompt is back at the left of the screen
-   //      Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
-   //         {
-   //            @Override
-   //            public void run()
-   //            {
-   //               if (out != null)
-   //               {
-   //                  try
-   //                  {
-   //                     Streams.flush(out);
-   //                  }
-   //                  catch (Exception ex)
-   //                  {
-   //                     ex.printStackTrace();
-   //                  }
-   //               }
-   //            }
-   //         }));
-   //   }
-
-   //   @ApiMethod
-   //   @Comment(value = "Writes to a BufferedWriter wrapping System.out but does not call stream.flush, call Streams.flush as desired.")
-   //   public static synchronized void out(Object... obj)
-   //   {
-   //      if (out == null)
-   //         out = new BufferedWriter(new OutputStreamWriter(System.out), MB);
-   //
-   //      try
-   //      {
-   //         for (Object o : obj)
-   //         {
-   //            if (o instanceof InputStream)
-   //            {
-   //               BufferedReader reader = new BufferedReader(new InputStreamReader((InputStream) o));
-   //               String line = null;
-   //
-   //               while ((line = reader.readLine()) != null)
-   //               {
-   //                  out.write(line);
-   //                  out.write(System.getProperty("line.separator"));
-   //               }
-   //            }
-   //            else
-   //            {
-   //               out.write(o != null ? o.toString() : "null");
-   //            }
-   //         }
-   //         out.write(System.getProperty("line.separator"));
-   //      }
-   //      catch (Exception ex)
-   //      {
-   //         Lang.rethrow(ex);
-   //      }
-   //   }
-
-   //   @ApiMethod
-   //   @Comment(value = "Read the next line from a BufferedReader wrapping System.in.  Using this means that for the duration of the JVM")
-   //   public static synchronized String in()
-   //   {
-   //      try
-   //      {
-   //         if (in == null)
-   //            in = new BufferedReader(new InputStreamReader(System.in), MB);
-   //
-   //         return in.readLine();
-   //      }
-   //      catch (Exception ex)
-   //      {
-   //         Lang.rethrow(ex);
-   //      }
-   //      return null;
-   //   }
 
 }

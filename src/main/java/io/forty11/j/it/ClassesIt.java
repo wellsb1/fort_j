@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ import java.util.zip.ZipFile;
 import io.forty11.j.api.Classes;
 
 /**
- *
+ * 
  * @author Wells Burke
  *
  */
@@ -40,14 +40,14 @@ public class ClassesIt implements Iterator<String>, Iterable<String>
    List    stack   = new ArrayList();
 
    /**
-    * A list of strings that have been returned alread so they should not
-    * be returned a second time, and a list of jar/zip file names that
+    * A list of strings that have been returned alread so they should not 
+    * be returned a second time, and a list of jar/zip file names that 
     * have been examined so that duplicats jar/zips at different paths
     * can be skipped
     */
    List    done    = new ArrayList();
-
-   Set ignoredDirs = new HashSet();
+   
+   Set ignoredDirs = new HashSet(); 
 
    /**
     * Finds all classes in the java.class.path
@@ -57,7 +57,7 @@ public class ClassesIt implements Iterator<String>, Iterable<String>
       ignoredDirs.add(file("."));
       ignoredDirs.add(file(System.getProperty("user.home")));
       ignoredDirs.add(file("/"));
-
+      
       //File workingDir = file(".");
       List<String> paths = Classes.getClassPath();
 
@@ -193,7 +193,7 @@ public class ClassesIt implements Iterator<String>, Iterable<String>
       }
    }
 
-   /*
+   /* 
    +------------------------------------------------------------------------------+
    | Iterator/Iterable interface support
    +------------------------------------------------------------------------------+
@@ -233,7 +233,7 @@ public class ClassesIt implements Iterator<String>, Iterable<String>
       throw new UnsupportedOperationException("remove() is not supported.  Subclasses should provide necessary implementation");
    }
 
-   /*
+   /* 
    +------------------------------------------------------------------------------+
    | Helpers
    +------------------------------------------------------------------------------+

@@ -22,40 +22,50 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import io.forty11.j.utils.Args;
-
 public class Shell
 {
    @ApiMethod
-   @Comment(value = "Convenience for System.getProperty(\"path.separator\")")
    public static String getPathSeparator()
    {
       return System.getProperty("path.separator");
    }
 
    @ApiMethod
-   @Comment(value = "Convenience for System.getProperty(\"line.separator\")")
    public static String getLineSeparator()
    {
       return System.getProperty("line.separator");
    }
 
    @ApiMethod
-   @Comment(value = "Executes a system command and returns the content of that processes standard_out as a string")
-   public static String run(String cmd) throws Exception
+   public static int getTerminalWidth()
    {
-      return run(Args.parse(cmd));
+      try
+      {
+         return Integer.parseInt(run("tput cols"));
+         //Process proc = Runtime.getRuntime().exec("tput cols");
+         //String output = Streams.read(proc.getInputStream());
+         //return Integer.parseInt(output);
+      }
+      catch (Exception ex)
+      {
+
+      }
+      return 120;
    }
 
    @ApiMethod
-   @Comment(value = "Executes a system command and returns the content of that processes standard_out as a string")
+   public static String run(String cmd) throws Exception
+   {
+      return run(Strings.parseArgs(cmd));
+   }
+
+   @ApiMethod
    public static String run(List<String> cmd) throws Exception
    {
       return run(cmd.toArray(new String[cmd.size()]));
    }
 
    @ApiMethod
-   @Comment(value = "Executes a system command and returns the content of that processes standard_out as a string")
    public static String run(String... cmd) throws Exception
    {
       String debug = new ArrayList(Arrays.asList(cmd)).toString();
