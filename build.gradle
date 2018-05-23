@@ -2,54 +2,18 @@ apply plugin: 'eclipse'
 apply plugin: 'java'
 apply plugin: 'maven'
 
-version = '0.0.4'
-group = 'wellsb1'
-
+version = '0.0.5'
+group = 'com.github.wellsb1'
 
 repositories { 
    mavenLocal()
    mavenCentral() 
 }
 
-
-/********************************************************
- * by default, targetCompatibility == sourceCompatibility  
- */
 sourceCompatibility = 1.6
-
 
 jar {
     baseName 'forty11-j'
 }
-
-/************************************************************
- * Ensuring source directories are created if they do not 
- * already exist when running 'gradle eclipse'
- * Also sets Java 6 as the default target within Eclipse
- */
-eclipse {
-	classpath {
-		file {
-			tasks.eclipse.dependsOn(cleanEclipseClasspath)
-			tasks.eclipse.dependsOn("create-dirs")
-		}
-	}
-}
-
-
-
-/************************************************************
- * This task should be used when creating a new project as
- * it will create all source and resource directories.  This
- * task is automatically executed during the 
- * 'gradle eclipse' command.
- */
-task "create-dirs" {
-	doLast {
-	   sourceSets*.java.srcDirs*.each { it.mkdirs() }
-	   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
-   }
-}
-
 
 

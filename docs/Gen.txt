@@ -40,7 +40,7 @@ import java.util.Set;
  */
 public class Gen
 {
-   //@Comment("Generates the code for Jj by searching the classpath for @ApiMethods.")
+   //@Comment("Generates the code for J by searching the classpath for @ApiMethods.")
    public static void main(String[] args)
    {
       Set<Method> jjMethods = new HashSet();
