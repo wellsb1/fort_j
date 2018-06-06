@@ -470,7 +470,7 @@ public class J
     * 
     * @see io.forty11.j.api.Strings#explode(java.lang.String, [Ljava.lang.String;)
     */
-   public static java.util.List explode(java.lang.String delim, java.lang.String... pieces)
+   public static java.util.List<String> explode(java.lang.String delim, java.lang.String... pieces)
    {
       try
       {
