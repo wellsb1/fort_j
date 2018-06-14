@@ -108,6 +108,13 @@ public class Args
       }
    }
 
+   public static <T> T config(T obj, String[] a)
+   {
+      Args args = new Args(a);
+      args.setAll(obj);
+      return obj;
+   }
+
    Map<String, String> args = new HashMap();
 
    public Args(String[] args)
@@ -122,20 +129,24 @@ public class Args
       }
    }
 
-   public String put(String key, String value)
+   public Args put(String key, String value)
    {
-      return args.put(key, value);
+      args.put(key, value);
+      return this;
    }
 
-   public void putDefault(String key, String value)
+   public Args putDefault(String key, String value)
    {
       if (getArg(key) == null)
          args.put(key.toLowerCase(), value);
+
+      return this;
    }
 
-   public String remove(String key)
+   public Args remove(String key)
    {
-      return args.remove(key.toLowerCase());
+      args.remove(key.toLowerCase());
+      return this;
    }
 
    public String getArg(String name)
@@ -149,7 +160,7 @@ public class Args
       return value != null ? value : deafultValue;
    }
 
-   public void setAll(Object target)
+   public Args setAll(Object target)
    {
       try
       {
@@ -212,5 +223,6 @@ public class Args
       {
          throw new RuntimeException(ex);
       }
+      return this;
    }
 }
