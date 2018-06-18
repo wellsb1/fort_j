@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import io.forty11.j.api.ApiMethod;
@@ -117,6 +118,11 @@ public class Args
 
    Map<String, String> args = new HashMap();
 
+   public Args()
+   {
+
+   }
+
    public Args(String[] args)
    {
       for (int i = 0; args != null && i < args.length - 1; i++)
@@ -127,6 +133,15 @@ public class Args
             i += 1;
          }
       }
+   }
+
+   public Args put(Properties p)
+   {
+      for (Object key : p.keySet())
+      {
+         put((String) key, p.getProperty((String) key));
+      }
+      return this;
    }
 
    public Args put(String key, String value)
@@ -151,12 +166,35 @@ public class Args
 
    public String getArg(String name)
    {
-      return args.get(name.trim().toLowerCase());
+      return getArg(name, null);
    }
 
    public String getArg(String name, String deafultValue)
    {
-      String value = args.get(name.trim().toLowerCase());
+      name = name.trim().toLowerCase();
+      String value = args.get(name);
+
+      if (value == null)
+      {
+         value = System.getProperty(name);
+         if (value == null)
+         {
+            for (Object key : System.getProperties().keySet())
+            {
+               if (name.equalsIgnoreCase((String) key))
+               {
+                  value = System.getProperty((String) key);
+                  break;
+               }
+            }
+         }
+      }
+
+      if (value == null)
+      {
+         value = System.getenv(name);
+      }
+
       return value != null ? value : deafultValue;
    }
 
@@ -180,7 +218,7 @@ public class Args
 
                done.add(name);
 
-               String value = args.get(name);
+               String value = getArg(name);
                if (value != null)
                {
                   f.setAccessible(true);
