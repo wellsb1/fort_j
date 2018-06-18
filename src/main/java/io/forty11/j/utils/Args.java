@@ -146,7 +146,7 @@ public class Args
 
    public Args put(String key, String value)
    {
-      args.put(key, value);
+      args.put(key.toLowerCase(), value);
       return this;
    }
 
@@ -171,8 +171,7 @@ public class Args
 
    public String getArg(String name, String deafultValue)
    {
-      name = name.trim().toLowerCase();
-      String value = args.get(name);
+      String value = args.get(name.toLowerCase());
 
       if (value == null)
       {
