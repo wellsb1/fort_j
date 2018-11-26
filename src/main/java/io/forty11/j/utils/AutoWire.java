@@ -166,7 +166,16 @@ public class AutoWire
          {
             String name = key.substring(0, key.lastIndexOf("."));
             String cn = (String) props.get(key);
-            Object obj = Class.forName(cn).newInstance();
+            Object obj = null;
+            try
+            {
+               obj = Class.forName(cn).newInstance();
+            }
+            catch(Exception ex)
+            {
+               System.err.println("Error instantiating class: '" + cn + "'");
+               throw ex;
+            }
 
             loaded.put(name, new HashMap());
             beans.put(name, obj);
