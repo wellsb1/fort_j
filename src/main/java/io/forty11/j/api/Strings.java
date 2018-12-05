@@ -23,6 +23,7 @@ import java.security.MessageDigest;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +37,13 @@ import io.forty11.j.J;
 public class Strings
 {
 
+   public static void main(String[] args)
+   {
+      System.out.println(J.implode("/",  "something", "//somethong else", Arrays.asList("asdfasf/12312/")));
+   }
+
    @ApiMethod
-   @Comment(value = "Concatenates pieces[0] + glue + pieces[n]...")
+   @Comment(value = "Concatenates pieces[0] + glue + pieces[n]... Intelligently recurses through Collections")
    public static String implode(String glue, Object... pieces)
    {
       if (pieces != null && pieces.length == 1 && pieces[0] instanceof Collection)
@@ -46,9 +52,25 @@ public class Strings
       StringBuffer str = new StringBuffer("");
       for (int i = 0; pieces != null && i < pieces.length; i++)
       {
-         str.append(pieces[i]);
-         if (i < pieces.length - 1)
-            str.append(glue);
+         if (pieces[i] != null)
+         {
+            String piece = pieces[i] instanceof Collection ? implode(glue, pieces[i]) : pieces[i].toString();
+
+            if (piece.length() > 0)
+            {
+               List<String> subpieces = explode(glue, piece);
+
+               for (String subpiece : subpieces)
+               {
+                  if (subpiece.length() > 0)
+                  {
+                     if (str.length() > 0)
+                        str.append(glue);
+                     str.append(subpiece);
+                  }
+               }
+            }
+         }
       }
       return str.toString();
    }
