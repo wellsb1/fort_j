@@ -226,7 +226,11 @@ public class AutoWire
                }
             }
          }
+      }
 
+      for (String beanName : keys)
+      {
+         Object obj = beans.get(beanName);
          int count = beanName.length() - beanName.replace(".", "").length();
          if (count > 0)
          {
@@ -307,52 +311,59 @@ public class AutoWire
 
    public void set(String key, Object obj, String prop, String value) throws Exception
    {
-      Method setter = getMethod(obj.getClass(), "set" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length()));
-      if (setter == null)
+      try
       {
-         setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length()));
-         if (setter == null && prop.endsWith("s"))
-            setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length() - 1));
-
-         if (setter == null && prop.endsWith("es"))
-            setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length() - 2));
-      }
-
-      if (setter != null && setter.getParameterTypes().length == 1)
-      {
-         setter.invoke(obj, cast(value, setter.getParameterTypes()[0]));
-      }
-      else
-      {
-         Field field = getField(prop, obj.getClass());
-         if (field != null)
+         Method setter = getMethod(obj.getClass(), "set" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length()));
+         if (setter == null)
          {
-            Class type = field.getType();
+            setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length()));
+            if (setter == null && prop.endsWith("s"))
+               setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length() - 1));
 
-            if (beans.containsKey(value) && type.isAssignableFrom(beans.get(value).getClass()))
-            {
-               field.set(obj, beans.get(value));
-            }
-            else if (Collection.class.isAssignableFrom(type))
-            {
-               Collection list = (Collection) cast(value, type);
-               ((Collection) field.get(obj)).addAll(list);
-            }
-            else if (Map.class.isAssignableFrom(type))
-            {
-               Map map = (Map) cast(value, type);
-               ((Map) field.get(obj)).putAll(map);
-            }
-            else
-            {
-               field.set(obj, cast(value, type));
-            }
+            if (setter == null && prop.endsWith("es"))
+               setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length() - 2));
+         }
+
+         if (setter != null && setter.getParameterTypes().length == 1)
+         {
+            setter.invoke(obj, cast(value, setter.getParameterTypes()[0]));
          }
          else
          {
-            System.out.println("Can't map: " + key + " = " + value);
-         }
+            Field field = getField(prop, obj.getClass());
+            if (field != null)
+            {
+               Class type = field.getType();
 
+               if (beans.containsKey(value) && type.isAssignableFrom(beans.get(value).getClass()))
+               {
+                  field.set(obj, beans.get(value));
+               }
+               else if (Collection.class.isAssignableFrom(type))
+               {
+                  Collection list = (Collection) cast(value, type);
+                  ((Collection) field.get(obj)).addAll(list);
+               }
+               else if (Map.class.isAssignableFrom(type))
+               {
+                  Map map = (Map) cast(value, type);
+                  ((Map) field.get(obj)).putAll(map);
+               }
+               else
+               {
+                  field.set(obj, cast(value, type));
+               }
+            }
+            else
+            {
+               System.out.println("Can't map: " + key + " = " + value);
+            }
+
+         }
+      }
+      catch (Exception ex)
+      {
+         J.rethrow("Error setting " + key + " = " + prop, ex);
       }
    }
 
