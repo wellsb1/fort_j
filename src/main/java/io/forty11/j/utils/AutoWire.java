@@ -171,7 +171,7 @@ public class AutoWire
             {
                obj = Class.forName(cn).newInstance();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                System.err.println("Error instantiating class: '" + cn + "'");
                throw ex;
@@ -246,31 +246,46 @@ public class AutoWire
                Object parent = beans.get(parentKey);
                if (parent != null)
                {
-                  Field field = getField(propKey, parent.getClass());
-                  if (field != null)
+                  String methodName = "add" + Character.toUpperCase(propKey.charAt(0)) + propKey.substring(1, propKey.length());
+                  Method adder = getMethod(parent.getClass(), methodName);
+                  if (adder == null && methodName.endsWith("s"))
+                     adder = getMethod(parent.getClass(), methodName.substring(0, methodName.length() - 1));
+
+                  if (adder == null && methodName.endsWith("es"))
+                     adder = getMethod(parent.getClass(), methodName.substring(0, methodName.length() - 2));
+
+                  if (adder != null)
                   {
-                     if (Map.class.isAssignableFrom(field.getType()))
-                     {
-                        Map map = (Map) field.get(parent);
-                        if (!map.containsKey(mapKey))
-                           map.put(mapKey, obj);
-                     }
-                     //                     else if (java.util.Collection.class.isAssignableFrom(field.getType()))
-                     //                     {
-                     //                        java.util.Collection list = (java.util.Collection) field.get(parent);
-                     //                        if (!list.contains(obj))
-                     //                        {
-                     //                           System.out.println("need to add it?");
-                     //                        }
-                     //                     }
-                     //                     else
-                     //                     {
-                     //                        System.out.println("asdf?");
-                     //                     }
+                     adder.invoke(parent, obj);
                   }
                   else
                   {
-                     //System.err.println("Field is not a map: " + beanName + " - " + field);
+                     Field field = getField(propKey, parent.getClass());
+                     if (field != null)
+                     {
+                        if (Map.class.isAssignableFrom(field.getType()))
+                        {
+                           Map map = (Map) field.get(parent);
+                           if (!map.containsKey(mapKey))
+                              map.put(mapKey, obj);
+                        }
+                        else if (java.util.Collection.class.isAssignableFrom(field.getType()))
+                        {
+                           java.util.Collection list = (java.util.Collection) field.get(parent);
+                           if (!list.contains(obj))
+                           {
+                              list.add(obj);
+                           }
+                        }
+                        else
+                        {
+                           System.err.println("Unable to set nested value: '" + beanName + "'");
+                        }
+                     }
+                     else
+                     {
+                        System.err.println("Field is not a mapped: " + beanName + " - " + field);
+                     }
                   }
                }
                else
@@ -298,6 +313,9 @@ public class AutoWire
          setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length()));
          if (setter == null && prop.endsWith("s"))
             setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length() - 1));
+
+         if (setter == null && prop.endsWith("es"))
+            setter = getMethod(obj.getClass(), "add" + Character.toUpperCase(prop.charAt(0)) + prop.substring(1, prop.length() - 2));
       }
 
       if (setter != null && setter.getParameterTypes().length == 1)
