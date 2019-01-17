@@ -19,7 +19,11 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class Executor
 {
@@ -54,10 +58,88 @@ public class Executor
       this.poolName = poolName;
    }
 
-   public synchronized void submit(RunnableFuture task)
+   public synchronized Future submit(final Runnable task)
+   {
+      return submit(new RunnableFuture()
+         {
+            boolean started  = false;
+            boolean canceled = false;
+            boolean done     = false;
+
+            @Override
+            public void run()
+            {
+               try
+               {
+                  if (canceled || done)
+                     return;
+
+                  started = true;
+                  task.run();
+               }
+               finally
+               {
+                  synchronized (this)
+                  {
+                     done = true;
+                     notifyAll();
+                  }
+               }
+            }
+
+            @Override
+            public boolean cancel(boolean mayInterruptIfRunning)
+            {
+               canceled = true;
+               return !started;
+            }
+
+            @Override
+            public boolean isCancelled()
+            {
+               return canceled;
+            }
+
+            @Override
+            public boolean isDone()
+            {
+               return false;
+            }
+
+            @Override
+            public Object get() throws InterruptedException, ExecutionException
+            {
+               synchronized (this)
+               {
+                  while (!done)
+                  {
+                     wait();
+                  }
+               }
+               return null;
+            }
+
+            @Override
+            public Object get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException
+            {
+               synchronized (this)
+               {
+                  while (!done)
+                  {
+                     wait(unit.toMillis(timeout));
+                  }
+               }
+               return null;
+            }
+
+         });
+   }
+
+   public synchronized RunnableFuture submit(RunnableFuture task)
    {
       put(task);
       checkStartThread();
+      return task;
    }
 
    public synchronized void submit(final RunnableFuture task, long delay)
