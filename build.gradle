@@ -3,17 +3,17 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 version = '1.0.0'
-group = 'com.github.wellsb1'
+group = 'com.github.RocketPartners'
+sourceCompatibility = 1.6
 
 repositories { 
    mavenLocal()
    mavenCentral() 
 }
 
-sourceCompatibility = 1.6
 
 jar {
-    baseName 'forty11-j'
+    baseName 'rocket-java'
 }
 
 
