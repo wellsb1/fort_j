@@ -1,5 +1,6 @@
 /*
- * Copyright 2008-2017 Wells Burke
+ * Copyright (c) 2015-2018 Rocket Partners, LLC
+ * http://rocketpartners.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.forty11.j.utils;
+package io.rocketpartners.utils;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
@@ -32,7 +33,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import io.forty11.j.J;
+import io.rocketpartners.J;
 
 public class AutoWire
 {

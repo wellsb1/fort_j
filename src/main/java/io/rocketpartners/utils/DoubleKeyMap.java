@@ -1,5 +1,6 @@
 /*
- * Copyright 2008-2017 Wells Burke
+ * Copyright (c) 2015-2018 Rocket Partners, LLC
+ * http://rocketpartners.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,48 +14,58 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.forty11.j.utils;
+package io.rocketpartners.utils;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
-public class DoubleKeyListMap
+public class DoubleKeyMap extends LinkedHashMap
 {
-   Map<Object, ListMap> root = new HashMap();
 
    public Object put(Object key1, Object key2, Object value)
    {
-      ListMap key2Map = root.get(key1);
+      Map key2Map = (Map) get(key1);
       if (key2Map == null)
       {
-         key2Map = new ListMap();
-         root.put(key1, key2Map);
+         key2Map = new LinkedHashMap();
+         put(key1, key2Map);
       }
 
       return key2Map.put(key2, value);
    }
 
-   public List get(Object key1, Object key2)
+   public Object get(Object key1, Object key2)
    {
-      ListMap key2Map = root.get(key1);
+      Map key2Map = (Map) get(key1);
       if (key2Map != null)
       {
          return key2Map.get(key2);
       }
 
-      return Collections.EMPTY_LIST;
+      return null;
    }
 
-   public ListMap get(Object key)
+   public boolean remove(Object key1, Object key2)
    {
-      return root.get(key);
+      Map key2Map = (Map) get(key1);
+      if (key2Map != null)
+      {
+         if (key2Map.size() == 1)
+         {
+            remove(key2Map);
+         }
+
+         return key2Map.remove(key2) != null;
+      }
+      else
+      {
+         return false;
+      }
    }
 
-   public Set keySet()
+   public boolean containsKey(Object key1, Object key2)
    {
-      return root.keySet();
+      return get(key1, key2) != null;
    }
+
 }

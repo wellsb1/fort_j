@@ -1,5 +1,6 @@
 /*
- * Copyright 2008-2017 Wells Burke
+ * Copyright (c) 2015-2018 Rocket Partners, LLC
+ * http://rocketpartners.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.forty11.j.utils;
+package io.rocketpartners.utils;
 
 import java.util.LinkedList;
 import java.util.Timer;
@@ -142,7 +143,7 @@ public class Executor
       return task;
    }
 
-   public synchronized void submit(final RunnableFuture task, long delay)
+   public synchronized RunnableFuture submit(final RunnableFuture task, long delay)
    {
       getTimer().schedule(new TimerTask()
          {
@@ -161,6 +162,8 @@ public class Executor
                t.start();
             }
          }, delay);
+
+      return task;
    }
 
    static synchronized Timer getTimer()
