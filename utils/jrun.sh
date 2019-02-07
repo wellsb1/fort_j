@@ -1,7 +1,10 @@
 #!/bin/bash
 #
 #
-# Copyright 2008-2017 Wells Burke
+# Copyright 2016-2019 Rocket Partners LLC
+# http://rocketpartners.io
+# 
+# Copyright 2008-2016 Wells Burke
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +18,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# JJ - A Generic Java Launcher
+
+# ===============================================
+# A simple java launch script that adds all 
+# 'classes' directories 'bin' directories, zip
+# and jar files found under the working directory 
+# (recursively to 2 directory levels) # to the classpath.
 #
+# If you have a java project that has a traditional layout
+# with a classed dir and/or lib/xyz.jar then you can
+# put this file in your project root directory and call
+# "./jrun.sh my.java.className program args following" to run
+# your app.
+# ===============================================
 
 # ===============================================
 # script customizations
@@ -25,7 +39,7 @@
 JAVA_HEAP_INIT_SIZE=64
 JAVA_HEAP_MAX_SIZE=1024
 
-# add additional class reporitories here
+# add additional class dirs here
 CLASSPATH=${CLASSPATH}
 
 # ===============================================
@@ -56,7 +70,7 @@ for dir in ${JJ_DIRS}
 do
     # ===============================================
     # inner looop finds all classes dirs, zip and jar files
-	for path in `find ${dir} -name 'classes' -or -wholename '*.jar' -or -wholename '*.zip' -maxdepth 2 2>/dev/null`
+	for path in `find ${dir} -name 'classes' -or 'bin' -or -wholename '*.jar' -or -wholename '*.zip' -maxdepth 2 2>/dev/null`
 	do
 	  CLASSPATH=${CLASSPATH}:${path}
 	done
