@@ -44,7 +44,7 @@ public class DoubleKeyMap<K1, K2, V1> extends LinkedHashMap<K1, Map>
       return null;
    }
 
-   public boolean remove(K1 key1, K2 key2)
+   public boolean removeKey(K1 key1, K2 key2)
    {
       Map key2Map = (Map) get(key1);
       if (key2Map != null)
