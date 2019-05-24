@@ -18,10 +18,10 @@ package io.forty11.j.utils;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DoubleKeyMap extends LinkedHashMap
+public class DoubleKeyMap<K1, K2, V1> extends LinkedHashMap<K1, Map>
 {
 
-   public Object put(Object key1, Object key2, Object value)
+   public Object put(K1 key1, K2 key2, V1 value)
    {
       Map key2Map = (Map) get(key1);
       if (key2Map == null)
@@ -33,18 +33,18 @@ public class DoubleKeyMap extends LinkedHashMap
       return key2Map.put(key2, value);
    }
 
-   public Object get(Object key1, Object key2)
+   public V1 get(K1 key1, K2 key2)
    {
       Map key2Map = (Map) get(key1);
       if (key2Map != null)
       {
-         return key2Map.get(key2);
+         return (V1) key2Map.get(key2);
       }
 
       return null;
    }
 
-   public boolean remove(Object key1, Object key2)
+   public boolean remove(K1 key1, K2 key2)
    {
       Map key2Map = (Map) get(key1);
       if (key2Map != null)
@@ -62,7 +62,7 @@ public class DoubleKeyMap extends LinkedHashMap
       }
    }
 
-   public boolean containsKey(Object key1, Object key2)
+   public boolean containsKey(K1 key1, K2 key2)
    {
       return get(key1, key2) != null;
    }
