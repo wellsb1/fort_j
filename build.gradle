@@ -1,19 +1,98 @@
-apply plugin: 'eclipse'
-apply plugin: 'java'
-apply plugin: 'maven'
+plugins {
+    id 'java-library'
+    
+    // publishes to a repository/sonatype
+    id 'maven-publish'
+    
+    // required to sign offical releases
+    id 'signing'
+    
+    // allows for 'quick' closing/releasing of jars published to sonatype, bypassing the need to access the sonatype website
+    id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
+}
 
 version = '1.0.0'
 group = 'com.github.wellsb1'
 
-repositories { 
-   mavenLocal()
-   mavenCentral() 
-}
-
 sourceCompatibility = 1.6
 
-jar {
-    baseName 'forty11-j'
+/*
+ *************************************************************
+ * Everything below this is necessary for pushing for Maven 
+ * Central.
+ *
+ * NOTICE: Sonatype policy prohibits the removal or any other 
+ * modification of artifacts after they've been published 
+ * to Central.  
+ * 
+ * see https://github.com/gradle-nexus/publish-plugin
+ *************************************************************
+ */
+ 
+nexusPublishing {
+	repositories {
+		sonatype()
+	}
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            
+            artifactId = 'forty11-j'
+            
+            pom {
+                name = 'FortJ'
+                description = 'Generic Java Utility Classes / Methods.'
+                url = 'https://github.com/wellsb1/fort_j'
+            
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
 
+                developers {
+                    developer {
+                        id = 'wellsb1'
+                    }
+//                    developer {
+//                        id = 'tcollins'
+//                    }
+                }
+                
+                scm {
+                    connection = 'scm:git:git://github.com/wellsb1/fort_j.git'
+                    developerConnection = 'scm:git:ssh://git@github.com:wellsb1/fort_j.git'
+                    url = 'http://github.com/wellsb1/fort_j/tree/master'
+                }
+            }
+        }
+    }
+    
+}
+
+// used for signing achives
+signing {
+    sign publishing.publications.mavenJava
+}
+
+// signs the published archive if the version does not include 'SNAPSHOT'
+tasks.withType(Sign) {
+    onlyIf { !version.endsWith("SNAPSHOT") }
+}
+
+// silence any javadoc lint warnings
+javadoc {
+    if(JavaVersion.current().isJava8Compatible()) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
+// The classifier property of Jar task is now deprecated. Instead, use withJavadocJar() and withSourcesJar()
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
